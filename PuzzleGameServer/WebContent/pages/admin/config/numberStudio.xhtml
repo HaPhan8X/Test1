@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          Number Studio List
+     </ui:define>
+		<ui:define name="body">
+			<!-- Form list-->
+			<h:form id="frmNumberStudioList">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{numberStudioManagedBean.doSearch()}" />
+							</f:metadata>
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<p:dataTable id="numberStudioTable" styleClass="order-table"
+								headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								value="#{numberStudioManagedBean.lsNumberStudioDTO}"
+								var="numberStudio" width="100%">
+								<p:column>
+									<f:facet name="header">
+									Number Studio
+								</f:facet>
+									<p:commandLink actionListener="#{numberStudioManagedBean.edit}"
+										oncomplete="dlgEdit.show()" update=":frmEdit"
+										styleClass="global-text-link"
+										value="#{numberStudio.numberStudio}" immediate="true">
+										<f:param value="#{numberStudio.numberStudio}"
+											name="currNumberStudioId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Coin Cost
+								</f:facet>
+									<h:outputText value="#{numberStudio.coinCost}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Gold Cost
+								</f:facet>
+									<h:outputText value="#{numberStudio.goldCost}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging
+									currentPage="#{numberStudioManagedBean.currentPage}"
+									limit="#{numberStudioManagedBean.limit}"
+									total="#{numberStudioManagedBean.totalRecords}"
+									endPage="#{numberStudioManagedBean.endPage}"
+									actionBean="numberStudioManagedBean" />
+							</div>
+							<div style="margin-top: 7px; float: left;" class="pbutton">
+								<p:commandButton styleClass="global-btn"
+									actionListener="#{numberStudioManagedBean.add}" value="Add"
+									oncomplete="dlgCreate.show()" update=":frmCreate">
+								</p:commandButton>
+							</div>
+							<!-- .pagination ends -->
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- end form List -->
+			<!-- create Level form -->
+			<p:dialog header="Create Number Studio" modal="true"
+				widgetVar="dlgCreate" resizable="false">
+				<h:form id="frmCreate" enctype="multipart/form-data"
+					prependId="false">
+					<p>
+						<h:messages id="msgCreate" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div style="background: no-repeat center; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">Coin Cost</label>
+							<h:inputText id="coinCostCreate" label="Coin Cost"
+								value="#{numberStudioManagedBean.numberStudioDTO.coinCost}"
+								required="true" requiredMessage="Coin Cost is required"
+								converterMessage="Coin Cost must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Gold Cost</label>
+							<h:inputText id="goldCostCreate" label="Gold Cost"
+								value="#{numberStudioManagedBean.numberStudioDTO.goldCost}"
+								required="true" requiredMessage="Gold Cost is required"
+								converterMessage="Gold Cost must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+					</div>
+					<div style="background: no-repeat center; margin: 20px auto"
+						class="pbutton">
+						<p:commandButton
+							action="#{numberStudioManagedBean.createNumberStudio}"
+							value="Create" styleClass="global-btn"
+							update="msgCreate,:frmNumberStudioList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{numberStudioManagedBean.cancel}"
+							value="Cancel" update=":frmNumberStudioList"
+							styleClass="global-btn" onclick="dlgCreate.hide();"
+							immediate="true" oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end create level form  -->
+			<!-- edit Level form -->
+			<p:dialog header="Edit Level Up Extra" modal="true"
+				widgetVar="dlgEdit" resizable="false">
+				<h:form id="frmEdit" enctype="multipart/form-data" prependId="false">
+					<p>
+						<h:messages id="msgEdit" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div style="background: no-repeat center; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">Coin Cost</label>
+							<h:inputText id="coinCostEdit" label="Coin Cost"
+								value="#{numberStudioManagedBean.numberStudioDTO.coinCost}"
+								required="true" requiredMessage="Coin Cost is required"
+								converterMessage="Coin Cost must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Gold Cost</label>
+							<h:inputText id="goldCostEdit" label="Gold Cost"
+								value="#{numberStudioManagedBean.numberStudioDTO.goldCost}"
+								required="true" requiredMessage="Gold Cost is required"
+								converterMessage="Gold Cost must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+					</div>
+					<div
+						style="background: no-repeat center; height: 30px; margin: 20px auto"
+						class="pbutton">
+						<p:commandButton action="#{numberStudioManagedBean.update}"
+							value="Update" styleClass="global-btn"
+							update="msgEdit,frmNumberStudioList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{numberStudioManagedBean.cancel}"
+							value="Cancel" styleClass="global-btn" onclick="dlgEdit.hide();"
+							immediate="true" update=":frmNumberStudioList"
+							oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end edit Level form -->
+			<script type="text/javascript">
+			function handleCreateRequest(xhr, status, args) {
+				if(args.validationFailed || !args.createSuccess) {
+				} else {
+					dlgCreate.hide();
+					dlgEdit.hide();
+				}
+			}
+		</script>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

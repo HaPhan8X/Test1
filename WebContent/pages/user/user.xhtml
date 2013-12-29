@@ -1,0 +1,192 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/adminLayout.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:tvo="http://tinhvan.com/tvo"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="title">
+            Manage User
+        </ui:define>
+	<ui:define name="body">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+		<!-- Form list -->
+		<h:form id="frmListUser" enctype="multipart/form-data">
+			<div class="main">
+				<div class="main-container">
+					<div class="main-content">
+						<f:metadata>
+							<f:event type="preRenderView"
+								listener="#{userManagedBean.doSearch()}" />
+						</f:metadata>
+						<div style="height: 25px; margin-left: 0px">
+							<h:messages id="msg" for="globalMessage" errorClass="error"
+								infoClass="success" />
+						</div>
+						<h:inputHidden id="globalMessage"></h:inputHidden>
+						<div class="left" style="width: 100%; padding: 0 0">
+							<p:dataTable id="roomList" var="item" styleClass="table-boder"
+								headerClass="table-header" value="#{userManagedBean.lsUser}"
+								rowKey="#{item.id}" rowIndexVar="i">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{item.select}"
+										style="width:10px;" styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Username
+									</f:facet>
+									<p:commandLink action="#{userManagedBean.prepareEdit}"
+										oncomplete="dlgUpdate.show()" update=":frmUpdate"
+										styleClass="global-text-link" value="#{item.userName}"
+										immediate="true">
+										<f:param value="#{item.id}" name="currUserId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Role Name
+									</f:facet>
+									<h:outputText value="#{item.roleName}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+						</div>
+
+						<div class="paging left center">
+							<p:panel id="paging">
+								<tvo:tvo-paging currentPage="#{userManagedBean.currentPage}"
+									limit="#{userManagedBean.limit}"
+									total="#{userManagedBean.totalRecords}"
+									endPage="#{userManagedBean.endPage}"
+									actionBean="userManagedBean" />
+
+							</p:panel>
+						</div>
+						<div class="pbutton" style="margin-top: 7px; float: left;">
+							<p:commandButton styleClass="global-btn"
+								actionListener="#{userManagedBean.prepareCreate}" value="Add"
+								oncomplete="dlgCreate.show()" update=":frmCreate" />
+							<p:commandButton action="#{userManagedBean.delete}"
+								value="Delete" styleClass="global-btn" update=":frmListUser"
+								oncomplete="addCheckAllListener();"
+								onclick="if (!confirm('Do you want to delete record?')) return false" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<!--End  Form list -->
+
+		<!-- Form create -->
+		<p:dialog header="Create New User" modal="true" resizable="false"
+			width="450" widgetVar="dlgCreate" appendToBody="true">
+			<h:form id="frmCreate" enctype="multipart/form-data">
+				<p>
+					<h:messages id="msgCreate" infoClass="message success"
+						errorClass="message error" />
+				</p>
+
+				<div class="width100 left" style="margin-top: 10px;">
+					<label class="label120 bold">User name:</label>
+					<h:inputText value="#{userManagedBean.currentUser.userName}"
+						style="width: 270px" required="true"
+						requiredMessage="Username is mandatory." />
+				</div>
+
+				<div class="width100 left" style="margin-top: 10px;">
+					<label class="label120 bold">Password:</label>
+					<h:inputSecret label="Password"
+						value="#{userManagedBean.currentUser.password}"
+						style="width: 270px" required="true"
+						requiredMessage="Password is mandatory.">
+						<f:validator validatorId="textInputValidator"></f:validator>
+					</h:inputSecret>
+				</div>
+				<div class="width100 left" style="margin-top: 10px;">
+					<label class="label120 bold">Role:</label>
+					<h:selectOneMenu value="#{userManagedBean.selectedRole}"
+						style="width:30%;">
+						<f:selectItems value="#{userManagedBean.lsRole}" var="roomDTO"
+							itemLabel="#{roomDTO.roleName}" itemValue="#{roomDTO.id}" />
+					</h:selectOneMenu>
+				</div>
+				<div
+					style="background: no-repeat center; width: 100%; height: 30px; margin: 10px 0 10px 0"
+					class="left pbutton">
+					<p:commandButton action="#{userManagedBean.create}" value="Create"
+						styleClass="global-btn" update="msgCreate,:frmListUser"
+						oncomplete="handleCreateRequest(xhr, status, args)" />
+					<p:commandButton action="#{userManagedBean.cancel}" value="Cancel"
+						update=":frmListUser" styleClass="global-btn"
+						onclick="dlgCreate.hide();" immediate="true"
+						oncomplete="addCheckAllListener();" />
+				</div>
+			</h:form>
+		</p:dialog>
+		<!--End  Form create -->
+		<!-- Form update -->
+		<p:dialog header="Update User Info" widgetVar="dlgUpdate" modal="true"
+			resizable="false" width="450" appendToBody="true">
+			<h:form id="frmUpdate" enctype="multipart/form-data">
+				<p>
+					<h:messages id="msgEdit" infoClass="message success"
+						errorClass="message error" />
+				</p>
+				<div class="width100 left">
+					<label class="label120 bold">User name:</label>
+					<h:inputText value="#{userManagedBean.currentUser.userName}"
+						style="width: 270px" required="true"
+						requiredMessage="Username is mandatory." />
+				</div>
+
+				<div class="width100 left">
+					<label class="label120 bold">Password:</label>
+					<h:inputSecret label="Password"
+						value="#{userManagedBean.currentUser.password}"
+						style="width: 270px" required="true"
+						requiredMessage="Password is mandatory.">
+						<f:validator validatorId="textInputValidator"></f:validator>
+					</h:inputSecret>
+				</div>
+
+
+				<div class="width100 left">
+					<label class="label120 bold">Role:</label>
+					<h:selectOneMenu value="#{userManagedBean.selectedRole}"
+						style="width:30%;">
+						<f:selectItems value="#{userManagedBean.lsRole}" var="roomDTO"
+							itemLabel="#{roomDTO.roleName}" itemValue="#{roomDTO.id}" />
+					</h:selectOneMenu>
+				</div>
+				<div
+					style="background: no-repeat center; height: 30px; margin: 0 auto"
+					class="pbutton">
+					<p:commandButton action="#{userManagedBean.update}" value="Update"
+						styleClass="global-btn" update="msgEdit,:frmListUser"
+						oncomplete="handleCreateRequest(xhr, status, args)" />
+					<p:commandButton action="#{advertisementManagedBean.cancel}"
+						value="Cancel" styleClass="global-btn" onclick="dlgEdit.hide();"
+						immediate="true" update=":frmListUser"
+						oncomplete="addCheckAllListener();" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<!--End  Form update -->
+		<script type="text/javascript">  
+			function handleCreateRequest(xhr, status, args) {
+				if(args.validationFailed || !args.createSuccess) {
+				} else {
+					dlgCreate.hide();
+					dlgUpdate.hide();
+					addCheckAllListener();
+				}
+			}
+		</script>
+	</ui:define>
+</ui:composition>

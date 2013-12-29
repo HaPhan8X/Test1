@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          Movie Category Create
+     </ui:define>
+		<ui:define name="body">
+			<h:form id="frmCreateMovieCategory" enctype="multipart/form-data"
+				prependId="false">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<div class="width100 left">
+								<div class="width40 left">
+									<div
+										style="background: no-repeat center; height: auto; margin: 0 auto">
+										<div class="width100 left">
+											<!-- UPLOAD AREA -->
+											<p style="margin: 0 0 5px 0">
+												<label class="bold">Movie Image</label>
+											</p>
+											<div class="rbt_img">
+												<p:graphicImage id="image_create"
+													value="#{categoryMovieManagedBean.imageData != null ? categoryMovieManagedBean.imageData : '/resources/images/no-images.png'}"
+													width="98" height="98" style="margin:-6px 7px;"
+													cache="false" />
+											</div>
+											<div
+												style="background: no-repeat center; width: 112px; height: 50px; padding-left: 210px;">
+												<p:fileUpload
+													fileUploadListener="#{categoryMovieManagedBean.handleFileUpload}"
+													label="Change Image" auto="true" mode="advanced"
+													update="frmCreateMovieCategory:image_create,msgCreate" />
+											</div>
+										</div>
+										<div class="width100 left">
+											<div class="error-msg"
+												style="margin-left: 214px; height: 18px">
+												<h:message for="categoryName"></h:message>
+											</div>
+											<p style="margin: 0 0 5px 0">
+												<label class="bold">Category Name</label>
+												<h:inputText id="categoryName" label="Category"
+													value="#{categoryMovieManagedBean.showCategoryDTO.name}"
+													required="true" requiredMessage="Category is required"
+													styleClass="text medium" maxlength="50">
+													<f:validator validatorId="textInputValidator"></f:validator>
+												</h:inputText>
+											</p>
+											<div class="error-msg"
+												style="margin-left: 214px; height: 18px">
+												<h:message for="reducePrice"></h:message>
+											</div>
+											<p style="margin: 0 0 5px 0">
+												<label class="bold">Reduce Price</label>
+												<h:inputText id="reducePrice" label="Reduce Price"
+													value="#{categoryMovieManagedBean.showCategoryDTO.reduceFactorMoney}"
+													required="true" requiredMessage="Reduce Price is required"
+													converterMessage="Reduce Price  must be number"
+													styleClass="text medium" maxlength="9">
+													<f:validator validatorId="numberValidator" />
+												</h:inputText>
+											</p>
+										</div>
+									</div>
+								</div>
+								<div class="width60 right">
+									<!-- add droppable item dialog -->
+									<p:dataTable id="droppableItemPanel" paginator="true" rows="10"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+										paginatorPosition="top" headerClass="order-table-header"
+										rowClasses="order-table-odd-row,order-table-even-row"
+										value="#{categoryMovieManagedBean.lsDropableItemDTOs}"
+										var="partnerItem" width="100%">
+										<f:facet name="header">  
+						           Increase Rate Money And XP
+						          	 <p:commandLink oncomplete="dlgAddItem.show();"
+												action="#{categoryMovieManagedBean.addDroppableItem}"
+												styleClass="right" style="margin-right: 5px"
+												immediate="true" update="frmAddItem">
+												<img
+													src="#{facesContext.externalContext.requestContextPath}/resources/images/ico_add.png"></img>
+											</p:commandLink>
+										</f:facet>
+										<p:column>
+											<f:facet name="header">
+										Advertising
+									</f:facet>
+											<h:outputText style="width:50px;"
+												value="#{partnerItem.tblAdvertisement.name}"></h:outputText>
+										</p:column>
+										<p:column>
+											<f:facet name="header">
+										Money Factor
+									</f:facet>
+											<div style="height: 25px; margin-left: 0px;">
+												<div style="height: 25px; margin-left: 0px; float: left;">
+													<p:inputText id="moneyFactor" label=" "
+														value="#{partnerItem.factorMoney}" required="true"
+														maxlength="5" requiredMessage="Required"
+														converterMessage="Must be a number"
+														styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+														style="width: 40px">
+														<f:validator validatorId="numberValidator" />
+														<p:ajax event="blur" />
+													</p:inputText>
+													<h:outputText value="%"></h:outputText>
+												</div>
+												<div class="error-msg"
+													style="height: 25px; padding: 3px 0px 0px">
+													<h:message for="moneyFactor"></h:message>
+												</div>
+											</div>
+										</p:column>
+										<p:column>
+											<f:facet name="header">
+										Xp Factor
+									</f:facet>
+											<div style="height: 25px; margin-left: 0px;">
+												<div style="height: 25px; margin-left: 0px; float: left;">
+													<p:inputText id="xpFactor" label=" "
+														value="#{partnerItem.factorXp}" required="true"
+														maxlength="5" requiredMessage="Required"
+														converterMessage="must be a number"
+														styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+														style="width: 40px">
+														<f:validator validatorId="numberValidator" />
+														<p:ajax event="blur" />
+													</p:inputText>
+													<h:outputText value="%"></h:outputText>
+												</div>
+												<div class="error-msg"
+													style="height: 25px; padding: 3px 0px 0px">
+													<h:message for="xpFactor"></h:message>
+												</div>
+											</div>
+										</p:column>
+										<p:column>
+											<f:facet name="header">
+										Action
+									</f:facet>
+											<h:commandLink
+												action="#{categoryMovieManagedBean.removeDroppableItem(partnerItem)}"
+												value="Delete" styleClass="global-text-link">
+												<h:graphicImage
+													url="#{facesContext.externalContext.requestContextPath}/resources/images/ico_add.png"></h:graphicImage>
+											</h:commandLink>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+							<div class="width100 left">
+								<div
+									style="background: no-repeat center; height: 30px; margin: 0 auto">
+									<p>
+										<h:commandButton
+											action="#{categoryMovieManagedBean.createCategory}"
+											value="Create" styleClass="global-btn" />
+										<h:commandButton action="#{categoryMovieManagedBean.cancel}"
+											value="Cancel" immediate="true" styleClass="global-btn" />
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- end add droppable item dialog -->
+			<!-- add droppable item dialog -->
+			<p:dialog header="Add Advertising" widgetVar="dlgAddItem"
+				modal="true" resizable="false" appendToBody="true">
+				<h:form id="frmAddItem" enctype="multipart/form-data">
+					<div style="width: 100%">
+						<!-- add grid for select item here -->
+						<p:dataTable paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginatorPosition="top"
+							value="#{categoryMovieManagedBean.lsAdvertisementDTO}"
+							styleClass="data_table" style="width: 100%; margin: 0"
+							var="advertisement" rowKey="#{advertisement.id}"
+							selectionMode="single" id="itemsTable">
+							<p:ajax event="rowSelect"
+								listener="#{categoryMovieManagedBean.onItemRowSelect}"
+								immediate="true" oncomplete="dlgAddItem.hide();"
+								update=":frmAddItem,droppableItemPanel" />
+							<p:column style="padding: 5px;" headerText="Name">
+								<b><h:outputText value="#{advertisement.name}" class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="XP">
+								<b><h:outputText value="#{advertisement.xp}" class="left" /></b>
+							</p:column>
+
+							<p:column style="padding: 5px;" headerText="Earning">
+								<b><h:outputText value="#{advertisement.earning}"
+										class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Penalty">
+								<b><h:outputText value="#{advertisement.penalty}"
+										class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Broadcast Number">
+								<b><h:outputText value="#{advertisement.broadcastNumber}"
+										class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Required Viewer">
+								<b><h:outputText value="#{advertisement.requiredViewer}"
+										class="left" /></b>
+							</p:column>
+						</p:dataTable>
+					</div>
+					<br></br>
+				</h:form>
+			</p:dialog>
+			<!-- end add droppable item dialog -->
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

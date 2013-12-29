@@ -1,0 +1,688 @@
+/*
+	Css name: Override
+	Author: khanhvd
+*/
+.ui-panel {
+	padding: 0;
+}
+
+/****************** Format for button ********************/
+.ui-button {
+	position: static;
+	margin: 0;
+	background-color: #0e3f6a !important;
+	color: #ffffff;
+	/*width: 65px;*/
+	border-color: #29447E;
+	margin-right: 5px;
+}
+
+.button_bottom .ui-button {
+	padding: 4px 8px;
+}
+
+.button_bottom .btn_red,.button_bottom .btn_grey {
+	margin: 0 5px;
+}
+
+/************* Format Dialog box ********************/
+.ui-dialog .ui-dialog-content {
+	overflow: auto;
+	/*float: right;*/
+	width: 96%;
+	height: 400px;
+	padding: 2%;
+	background-color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	height: auto;
+	/*background: url("../images/bg_popuptitle.png") repeat-x;*/
+	background: #236EAF;
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: medium none;
+	float: left;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	width: 100%;
+}
+
+.confirm_box .ui-dialog-content {
+	display: none;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	margin-left: 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-close,.ui-dialog .ui-dialog-titlebar-minimize,.ui-dialog .ui-dialog-titlebar-maximize
+	{
+	float: right;
+	padding: 0;
+	position: relative;
+	top: 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	background: url("../images/close_icon.png") no-repeat;
+	width: 22px;
+	height: 22px;
+}
+
+/************** Format Box Message ************** */
+.ui-messages {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.ui-messages-info,.ui-messages-warn,.ui-messages-error,.ui-messages-fatal
+	{
+	margin: 0;
+	width: auto;
+}
+
+.ui-message-info,.ui-message-error,.ui-message-warn,.ui-message-fatal {
+	margin: 0;
+}
+
+/***************** Format Paging ************************/
+.paging {
+	position: relative;
+	width: 100%;
+}
+
+.paging .page_btn {
+	position: relative;
+	top: 7px;
+	margin: 0 2px 0 0;
+}
+
+.paging .ui-widget-content,.paging .ui-panel,.paging .ui-widge,.paging .ui-corner-all
+	{
+	border: none;
+	padding: 5px;
+}
+
+/* Format file upload */
+/********************* button upload ******************* */
+.ui-fileupload .ui-widget-header,.ui-fileupload .ui-widget-content {
+	background: none;
+	border: none;
+}
+
+label.fileinput-button {
+	float: none;
+	margin: 0 auto;
+	position: relative;
+	width: 100%;
+}
+
+.ui-button-text-icon-primary .ui-button-text,.ui-button-text-icons .ui-button-text
+	{
+	padding: 1px 0px 2px 0px;
+}
+
+.btn_upload {
+	height: 20px;
+	padding: 4px 0 4px 2px;
+	background: #fdfdfd url("../images/bg_btnUpload.gif") repeat-x bottom
+		left;
+	font-size: 11px;
+	border: 1px solid #ccc;
+}
+
+.btn_upload_2 {
+	float: left;
+	background: #fdfdfd url("../images/bg_btnUpload.gif") repeat-x bottom
+		left;
+	font-size: 11px;
+	height: 22px;
+	text-align: center;
+}
+
+.btn_upload .ui-button-text,.btn_upload_2 .ui-button-text {
+	color: #000;
+	font-weight: bold;
+}
+
+.btn_upload .fileupload-content,.btn_upload .ui-icon {
+	display: none;
+}
+
+.file_upload_edit {
+	width: 200px;
+	margin: 0px 10px 0px 0px;
+	background: #ae1215;
+}
+
+.file_upload_edit label.fileinput-button {
+	width: 190px;
+}
+
+.file_upload_edit .ui-button-text {
+	color: #fff;
+	font-weight: bold;
+}
+
+.file_upload_edit .fileupload-content,.file_upload_edit .ui-icon,.btn_upload .fileupload-content,.btn_upload .ui-icon
+	{
+	display: none;
+}
+
+/* Format Data grid */
+.ui-datagrid-row {
+	float: left;
+	width: 100%;
+}
+
+.ui-datagrid-column {
+	text-align: center;
+	float: left;
+	width: 113px;
+}
+/*
+.artistList .ui-datagrid-column{width: 113px;}
+*/
+.artist_info .related_rbt .ui-datagrid-column,.artist_info .related_video .ui-datagrid-column,.video_infor .related_rbt .ui-datagrid-column,.video_infor .related_video .ui-datagrid-column,.rbt_infor .related_rbt .ui-datagrid-column,.rbt_infor .related_video .ui-datagrid-column
+	{
+	width: 120px;
+}
+
+.rbt_infor .operator_list .ui-datagrid-column {
+	width: 110px
+}
+
+.video_update .ui-datagrid-column {
+	padding: 0
+}
+
+.rbt_update .support_operator .ui-datagrid-column {
+	padding: 0;
+	width: 100px;
+}
+
+.rbt_update .selected_area_grid .ui-datagrid-column,.video_update .selected_area_grid .ui-datagrid-column
+	{
+	padding: 4px 8px;
+}
+
+/* Manage Contact - List friend  */
+.list_friend .ui-datagrid-column,.manage_contact .ui-datagrid-column {
+	width: 153px;
+	margin: 0 4px 0 5px;
+}
+
+.list_friend .contract_box,.manage_contact .contract_box {
+	width: 100%;
+	background: #F5F5F5;
+	border: 1px solid #CCCCCC;
+	float: left;
+	height: 60px;
+	display: table;
+	position: relative;
+	overflow: hidden;
+}
+
+.list_friend .txtContract,.manage_contact .txtContract {
+	word-wrap: break-word;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	overflow: hidden;
+}
+
+.list_friend .box_click {
+	width: 100%;
+	padding: 5px 0;
+}
+
+.list_friend .txtContract {
+	width: 150px;
+}
+
+.manage_contact .txtContract {
+	width: 85%;
+}
+
+.manage_contact .hearnum {
+	display: table-cell;
+	vertical-align: middle;
+	width: 10%;
+}
+
+.manage_contact .contract_box:hover {
+	cursor: pointer;
+	*cursor: hand;
+}
+
+.ui-panel .ui-panel-content {
+	background: none repeat scroll 0 0 transparent;
+	border: 0 none;
+	padding: 0.4em;
+}
+
+/******************* Format Form: input , select , textarea  **************************/
+/* 1. Select*/
+.ui-selectonemenu .ui-selectonemenu-label {
+	border: 1px solid #d8d8d8;
+	cursor: pointer;
+	display: block;
+	padding: 1px 26px 1px 5px;
+	width: auto;
+	background: #fff;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+	background: url("../images/ico_select.gif") no-repeat;
+	width: 17px;
+	height: 22px;
+	padding: 0px;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list {
+	background: none repeat scroll 0 0 #FFFFFF;
+	padding: 0.4em;
+	border: #d8d8d8 1px solid;
+	border-top: none;
+}
+
+/* 1. Input Feild*/
+.ui-inputfield {
+	border: 1px solid #D8D8D8;
+	margin: 0;
+	outline: medium none;
+	padding: 4px;
+	font-size: 12px;
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 0;
+}
+
+/* Format Checkbox */
+.ui-checkbox {
+	background: url("../images/checkbox_noactive.gif") no-repeat;
+	margin: 5px auto;
+	position: relative;
+	width: 15px;
+	height: 15px;
+}
+
+.ui-icon-check {
+	background: url("../images/checkbox_active.gif") no-repeat;
+	width: 15px;
+	height: 15px;
+}
+
+/* Format Textarea */
+.story_txtarea .ui-inputfield.ui-state-focus,.story_txtarea .ui-widget-content .ui-inputfield.ui-state-focus,.story_txtarea .ui-widget-header .ui-inputfield.ui-state-focus
+	{
+	border: none;
+	height: 310px;
+}
+
+/*********************** Format home page ***************************/
+.ui-widget-content {
+	border: none;
+	background: none;
+}
+
+.ui-panel .ui-panel-titlebar {
+	position: relative;
+	text-align: center;
+	padding: 0;
+}
+
+.ui-panel .ui-panel-title {
+	color: #000;
+	position: relative;
+	top: 5px;
+	margin: 0;
+}
+
+#page_home .ui-widget-header {
+	background: url("../images/bg_pagetitle.png") repeat-x left;
+	border: none;
+	color: #FFFFFF;
+	font-weight: bold;
+	height: 30px;
+	border-left: #ccc 1px solid;
+	border-right: #ccc 1px solid;
+}
+
+/*************** Format Table *******************/
+.ui-datatable table {
+	font-size: 11px;
+	background-color: red !important;
+}
+
+.ui-datatable th,.ui-datatable tfoot td {
+	background: #236EAF;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	text-align: left !important;
+	white-space: nowrap;
+	color: #ffffff;
+	font-family: 'arial';
+	font-size: 9pt;
+}
+
+.ui-datatable .ui-datatable-data td,.ui-datatable .ui-datatable-data-empty td
+	{
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 1px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+}
+
+.data_table table tr:hover {
+	background: #d1dfff;
+}
+
+.ui-datatable th div.ui-dt-c,.ui-datatable .ui-datatable-data td div.ui-dt-c,.ui-datatable .ui-datatable-data-empty td div.ui-dt-c,.ui-datatable tfoot td div.ui-dt-c
+	{
+	padding: 4px 4px 0 4px;
+}
+
+.table_setting .ui-datatable-data td,.table_setting .ui-datatable-data-empty td,.table_setting .ui-datatable th
+	{
+	width: 20%;
+}
+
+/* Format button next - previous , icon */
+.btn_title_back,.btn_title_next {
+	width: 30px;
+	height: 30px;
+	border: none;
+}
+
+.btn_title_back {
+	background: url(../images/btn_title_previous.png) no-repeat;
+	margin-left: -1px;
+}
+
+.btn_title_next {
+	background: url(../images/btn_title_next.png) no-repeat;
+	margin-right: -1px;
+}
+
+.category_name .btn_title_back,.category_name .btn_title_next {
+	margin-top: -5px;
+}
+
+/********************** Formar for Tab ****************************/
+.ui-datagrid-data {
+	float: left;
+}
+
+.ui-tabs .ui-tabs-panel {
+	padding: 0;
+}
+
+.ui-tabs-panels {
+	display: inline;
+}
+
+.area_tab {
+	padding: 10px 0;
+	background: #eee;
+}
+
+.ui-tabs .ui-tabs-nav {
+	margin: 0 auto;
+	list-style: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	border-left: 0;
+	border-bottom: 1px solid #aaa;
+}
+
+.preferences_tab .tab-grey-bg,.ui-tabs .ui-tabs-nav li.ui-corner-top {
+	background: #f7f7f7 url("../images/bg_tab_noactive.png") repeat-x bottom
+		left;
+	border: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	padding: 5px 0;
+	text-align: center;
+}
+
+.preferences_tab .tab-selected,.ui-tabs .ui-tabs-nav li.ui-tabs-selected
+	{
+	background: #de1d1e url("../images/bg_tab_active.png") repeat-x bottom
+		left;
+	border: none;
+	border-top: 1px solid #580201;
+	border-left: 1px solid #580201;
+	border-bottom: 1px solid #580201;
+	padding: 5px 0;
+	text-align: center;
+}
+
+.preferences_tab .tab-grey-bg,.preferences_tab .tab-selected {
+	font-weight: bold;
+	width: 150px;
+	padding: 2px 10px;
+}
+
+.preferences_tab .tab-selected,.ui-tabs .ui-tabs-nav li.ui-tabs-selected a,.ui-tabs .ui-tabs-nav li.ui-state-disabled a,.ui-tabs .ui-tabs-nav li.ui-state-processing a
+	{
+	cursor: pointer;
+	*cursor: hand;
+	color: #fff
+}
+
+.ui-tabs .ui-tabs-nav li a,.ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a
+	{
+	cursor: pointer;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	float: none;
+	padding: 0.4em 0;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.ui-state-active a,.ui-state-active a:link,.ui-state-active a:visited {
+	color: #FFFFFF;
+}
+
+/* Tab for Statistic */
+.statistic_tab .ui-tabs-nav {
+	width: 829px;
+	padding: 10px;
+}
+
+.statistic_tab .ui-tabs-nav li {
+	width: 19.75%;
+}
+
+/* Tab for Other */
+.list_friend .ui-tabs-nav li {
+	width: 24.7%;
+}
+
+/* Tab for My RBT */
+.myRbtList .ui-tabs-nav li {
+	width: 49%;
+}
+
+/* Tab for Order_list */
+.order_list .ui-tabs-nav li {
+	width: 33%;
+}
+
+/* Tab for Search Avanced */
+.search_advanced .search_option .ui-tabs-nav li {
+	width: 33%;
+}
+
+/*************** Format Calendar Popup ******************/
+.ui-datepicker .ui-datepicker-header {
+	background: url("../images/bg_popuptitle.png") repeat-x;;
+	padding: 0.2em 0;
+	position: relative;
+}
+
+.ui-datepicker .ui-datepicker-prev {
+	background: url("../images/btn_paging_previous.gif") no-repeat;
+}
+
+.ui-datepicker .ui-datepicker-next {
+	background: url("../images/btn_paging_next.gif") no-repeat;
+}
+
+.ui-datepicker .ui-datepicker-prev,.ui-datepicker .ui-datepicker-next {
+	top: 5px;
+	width: 16px;
+	height: 16px;
+}
+
+.ui-datepicker .ui-datepicker-prev-hover,.ui-datepicker .ui-datepicker-next-hover
+	{
+	padding: 2px;
+}
+
+.ui-datepicker table {
+	background: #fff;
+	border: 1px solid #AAAAAA;
+}
+
+.ui-datepicker-trigger {
+	border: none;
+	background: none;
+	position: relative;
+	top: 7px;
+}
+
+/*************** Video - RBT Update ******************/
+.relatedrbt .slider_area .ui-panel .ui-panel-content,.relatedvideo .slider_area .ui-panel .ui-panel-content
+	{
+	padding: 5px 7px 5px 6px;
+}
+
+.selected_area_grid {
+	background: #f9f9f9;
+	float: left;
+	width: 97.1%;
+	padding: 10px;
+	border: 1px solid #999999;
+}
+
+.selected_title {
+	background: #666;
+	padding: 5px 15px;
+	color: #fff;
+}
+
+.selected_search {
+	height: 12px;
+	margin-right: 3px;
+}
+/* search popup */
+.ui-state-highlight,.ui-widget-content .ui-state-highlight,.ui-widget-header .ui-state-highlight
+	{
+	background: none repeat scroll 0 0 #D1DFFF;
+	color: #333;
+}
+
+/*********************** Format Jquery Slider *************************/
+.ui-carousel-header {
+	height: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.ui-carousel-page-links {
+	display: none;
+}
+
+.item_carousel {
+	height: 150px;
+	width: 130px;
+	text-align: center;
+}
+
+.ui-carousel-dropdown {
+	display: none;
+}
+
+.ui-carousel {
+	
+}
+
+.ui-carousel-viewport ul {
+	position: relative;
+}
+
+.ui-carousel-next-button,.ui-carousel-prev-button {
+	width: 24px;
+	height: 24px;
+	position: absolute;
+	top: 45px;
+}
+
+.ui-carousel-next-button {
+	background: url("../images/btn_next.png") no-repeat;
+	right: -15px;
+}
+
+.ui-carousel-prev-button {
+	background: url("../images/btn_previous.png") no-repeat;
+	left: -15px;
+	float: left;
+}
+
+.next-button,.prev-button {
+	width: 24px;
+	height: 24px;
+	float: left;
+	position: relative;
+	top: 45px
+}
+
+.next-button {
+	background: url("../images/btn_next.png") no-repeat;
+	right: 5px;
+}
+
+.prev-button {
+	background: url("../images/btn_previous.png") no-repeat;
+	left: 5px;
+}
+
+.ui-state-disabled,.ui-widget-content .ui-state-disabled,.ui-widget-header .ui-state-disabled
+	{
+	background-image: none;
+	/*   opacity: 0;*/
+}
+
+.test_c input {
+	width: 89px;
+}
+
+.ui-state-default,.ui-widget-content .ui-state-default,.ui-widget-header .ui-state-default
+	{
+	background: none;
+	color: #fff;
+}
+
+.table-boder table tbody tr.ui-widget-content {
+	background: none;
+}

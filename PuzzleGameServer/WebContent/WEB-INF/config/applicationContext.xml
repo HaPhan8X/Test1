@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+	<context:property-placeholder location="classpath*:/META-INF/*.properties" />
+	<!-- DATA SOURCE -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="url" value="${database.url}" />
+		<property name="username" value="${database.username}" />
+		<property name="password" value="${database.password}" />
+		<property name="driverClassName" value="${database.driverClassName}" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="60" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="-1" />
+		<property name="defaultAutoCommit" value="false" />
+	</bean>
+	<!-- SESSION FACTORY -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+		destroy-method="destroy">
+		<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.tvo.puzzle.entity.Project</value>
+				<value>com.tvo.puzzle.entity.Role</value>
+				<value>com.tvo.puzzle.entity.User</value>
+				<value>com.tvo.puzzle.entity.UserRole</value>
+				<value>com.tvo.puzzle.entity.Game</value>
+				<value>com.tvo.puzzle.entity.GameDetail</value>
+				<value>com.tvo.puzzle.entity.Member</value>
+				<value>com.tvo.puzzle.entity.Product</value>
+				<value>com.tvo.puzzle.entity.PointManagement</value>
+				<value>com.tvo.puzzle.entity.PresentManagement</value>
+				<value>com.tvo.puzzle.entity.News</value>
+				
+			</list>
+		</property>
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop> 
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- TRANSACTION MANAGER -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Enable @Transactional support -->
+	<tx:annotation-driven />
+
+	<bean class="com.tvo.puzzle.context.SpringApplicationContext" />
+
+
+	<!-- Enable @AspectJ support <aop:aspectj-autoproxy/> -->
+
+	<!-- needed is for @Configurable -->
+	<context:component-scan base-package="com.tvo.puzzle.application.impl">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	<context:component-scan base-package="com.tvo.puzzle.service.impl">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	<context:component-scan base-package="com.tvo.puzzle.task">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+	<context:component-scan base-package="com.tvo.puzzle.dao.impl">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+</beans>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<ui:component>
+	<div class="menu_manage right">
+		<h:form>
+			<ul id="menu_drop">
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li id="system" class="active"><a href="#">Movie</a>
+						<ul>
+							<li><h:commandLink value="Movie Management"
+									action="#{movieManagedBean.initMovieScreen}" /></li>
+							<li><h:commandLink value="Category Management"
+									action="#{categoryMovieManagedBean.initCategoryScreen}" /></li>
+						</ul></li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/room/room.xhtml">Room</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/screenplay/screenplays.xhtml">Screenplay</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/advertisement/advertisement.xhtml">Advertisement</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/level/level.xhtml">Level</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li id="system" class="active"><a href="#">Config</a>
+						<ul>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/config.xhtml">System</a>
+							</li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/levelUpExtra.xhtml">Level
+									Up Extra</a></li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/numberStudio.xhtml">Number
+									Studio Cost</a></li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/lovePointExtra.xhtml">Love
+									Point Extra</a></li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/configGoldToCoin.xhtml">Gold
+									To Coin Extra</a></li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/configMoneyToCoin.xhtml">Money
+									To Coin Extra</a></li>
+							<li><a
+								href="#{facesContext.externalContext.requestContextPath}/pages/admin/config/configMoneyToGold.xhtml">Money
+									To Gold Extra</a></li>
+						</ul></li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li id="system" class="active"><a href="#">Item</a>
+						<ul>
+							<li><h:commandLink value="Category"
+									action="#{itemCategoryManagedBean.initItemCategoryScreen}" />
+							</li>
+							<li><h:commandLink value="Equipment"
+									action="#{equipmentManagedBean.initEquipmentScreen}" /></li>
+							<li><h:commandLink value="Present"
+									action="#{presentBean.initPresentScreen}" /></li>
+						</ul></li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li id="system" class="active"><a href="#">News</a>
+						<ul>
+							<li><h:commandLink value="News Category"
+									action="#{newsCategoryManagedBean.initNewsCategoryScreen}" />
+							</li>
+							<li><h:commandLink value="News"
+									action="#{newsBean.initNewsScreen}" /></li>
+						</ul></li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasRole('Super Administrator')}">
+					<li id="system" class="active"><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/user/user.xhtml">User</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/collection/collection.xhtml">Collection</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/event/event.xhtml">Event</a>
+					</li>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{userSession.hasAnyRole('Super Administrator','Administrator')}">
+					<li><a
+						href="#{facesContext.externalContext.requestContextPath}/pages/admin/account/account.xhtml">My
+							Account</a></li>
+				</h:panelGroup>
+			</ul>
+		</h:form>
+	</div>
+</ui:component>
+</html>

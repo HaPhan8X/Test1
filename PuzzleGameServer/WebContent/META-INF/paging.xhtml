@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:component>
+	<div class="pagination right">
+		<h:outputText value="[Total #{total} Records]" />
+		<a4j:outputPanel rendered="#{endPage > 1}">
+
+			<h:commandLink action="#{pagingActionBean.changePage(actionBean)}"
+				value="First" rendered="#{currentPage gt 1}"
+				styleClass="paging-item">
+				<f:param name="currentPage" value="1" />
+			</h:commandLink>
+			<h:commandLink action="#{pagingActionBean.changePage(actionBean)}"
+				value="Previous" rendered="#{currentPage gt 1}"
+				styleClass="paging-item">
+				<f:param name="currentPage" value="#{currentPage - 1}" />
+			</h:commandLink>
+
+			<a href="#" class="active">#{currentPage > endPage ? endPage :
+				currentPage}/ #{endPage} Page</a>
+
+			<h:commandLink action="#{pagingActionBean.changePage(actionBean)}"
+				value="Next" rendered="#{currentPage lt endPage}"
+				styleClass="paging-item">
+				<f:param name="currentPage" value="#{currentPage + 1}" />
+			</h:commandLink>
+			<h:commandLink action="#{pagingActionBean.changePage(actionBean)}"
+				value="Last" rendered="#{currentPage lt endPage}"
+				styleClass="paging-item">
+				<f:param name="currentPage" value="#{endPage}" />
+			</h:commandLink>
+		</a4j:outputPanel>
+	</div>
+</ui:component>
+</html>

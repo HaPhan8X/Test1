@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+         My Account
+     </ui:define>
+		<ui:define name="body">
+			<h:form id="myAccount">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content" style="height: 150px;">
+							<f:metadata>
+								<f:event type="preRenderView" listener="#{userSession.init()}" />
+							</f:metadata>
+							<div>
+								<label class="bold">Name</label>
+								<h:outputText value="#{userSession.currentUser.userName}" />
+							</div>
+							<div>
+								<label class="bold">Role</label>
+								<h:outputText value="#{userSession.currentUser.roleName}" />
+							</div>
+
+							<div class="pbutton" style="margin-top: 80px; float: left;">
+								<p:commandButton styleClass="global-btn" value="Change Password"
+									oncomplete="dlgEdit.show()" update=":frmEdit" />
+							</div>
+							<!-- .pagination ends -->
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- edit category form -->
+			<p:dialog header="Change Password" width="480" height="260"
+				modal="true" widgetVar="dlgEdit" resizable="false">
+				<h:form id="frmEdit" enctype="multipart/form-data" prependId="false">
+					<div style="height: 60px; margin-left: 5px">
+						<p>
+							<h:messages id="msgEdit" infoClass="message success"
+								errorClass="message error" />
+						</p>
+					</div>
+					<div style="background: no-repeat center; margin: 0 auto">
+						<p style="margin: 5px">
+							<label class="bold">Account Name</label>
+							<h:outputText value="#{userSession.currentUser.userName}"
+								styleClass="text medium" readonly="true">
+							</h:outputText>
+						</p>
+						<p style="margin: 5px">
+							<label class="bold">Role Name</label>
+							<h:outputText value="#{userSession.currentUser.roleName}"
+								styleClass="text medium" readonly="true" />
+						</p>
+						<p style="margin: 5px">
+							<label class="bold">Current Password</label>
+							<h:inputSecret value="#{userSession.currentPassword}"
+								required="true" requiredMessage="Password is mandatory."
+								style="width:220px;" />
+						</p>
+						<p style="margin: 5px">
+							<label class="bold">New Password</label>
+							<h:inputSecret label="New Password"
+								value="#{userSession.newPassword}" required="true"
+								requiredMessage="Password is mandatory." style="width:220px;">
+								<f:validator validatorId="textInputValidator"></f:validator>
+							</h:inputSecret>
+						</p>
+						<p style="margin: 5px">
+							<label class="bold">Confirm New Password</label>
+							<h:inputSecret value="#{userSession.reNewPassword}"
+								required="true" requiredMessage="Password is mandatory."
+								style="width:220px;" />
+						</p>
+						<br></br>
+						<div
+							style="background: no-repeat center; height: 30px; margin: 5px"
+							class="pbutton">
+							<p:commandButton action="#{userSession.update}" value="Update"
+								styleClass="global-btn" update="msgEdit,:myAccount"
+								oncomplete="handleCreateRequest(xhr, status, args)" />
+							<p:commandButton action="#{userSession.cancel}" value="Cancel"
+								styleClass="global-btn" onclick="dlgEdit.hide();"
+								immediate="true" update=":myAccount" />
+						</div>
+					</div>
+
+
+				</h:form>
+			</p:dialog>
+			<!-- end edit category form -->
+			<script type="text/javascript">
+			function handleCreateRequest(xhr, status, args) {
+				if(args.validationFailed || !args.createSuccess) {
+				} else {
+					dlgEdit.hide();
+				}
+			}
+		</script>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

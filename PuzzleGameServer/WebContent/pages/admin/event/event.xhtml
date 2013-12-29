@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+           Event List
+    </ui:define>
+		<ui:define name="search">
+			<h:form>
+				<div class="search_box left">
+					<h:inputText value="#{eventManagedBean.searchKeyword}"
+						styleClass="input-search left fs11">
+						<p:ajax event="blur" />
+					</h:inputText>
+					<h:commandLink styleClass="btn-search"
+						actionListener="#{eventManagedBean.doSearch()}" />
+				</div>
+			</h:form>
+		</ui:define>
+		<ui:define name="body">
+			<script type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+			<h:form id="frmEvent">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{eventManagedBean.doSearch()}" />
+							</f:metadata>
+							<br></br>
+							<p:dataTable id="EventTable" headerClass="table-header"
+								styleClass="table-boder" value="#{eventManagedBean.lsEventDTO}"
+								var="event" width="100%">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{event.select}"
+										style="width:10px;" styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Name
+								</f:facet>
+									<h:commandLink action="#{eventManagedBean.edit}"
+										styleClass="global-text-link" value="#{event.name}"
+										immediate="true">
+										<f:param value="#{event.id}" name="currEventId"></f:param>
+									</h:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">Start Date</f:facet>
+									<h:outputText value="#{event.startTime}">
+										<f:convertDateTime pattern="MM/dd/yyyy" type="date"
+											timeZone="#{eventManagedBean.defaultTimeZone}">
+										</f:convertDateTime>
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">End Date</f:facet>
+									<h:outputText value="#{event.endTime}">
+										<f:convertDateTime pattern="MM/dd/yyyy" type="date"
+											timeZone="#{eventManagedBean.defaultTimeZone}">
+										</f:convertDateTime>
+									</h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging currentPage="#{eventManagedBean.currentPage}"
+									limit="#{eventManagedBean.limit}"
+									total="#{eventManagedBean.totalRecords}"
+									endPage="#{eventManagedBean.endPage}"
+									actionBean="eventManagedBean" />
+							</div>
+							<!-- .pagination ends -->
+							<div style="margin-top: 7px; float: left;">
+								<h:commandButton action="#{eventManagedBean.add}" value="Add"
+									styleClass="global-btn" />
+								<h:commandButton action="#{eventManagedBean.delete}"
+									value="Delete" styleClass="global-btn"
+									onclick="if (!confirm('Do you want to delete record?')) return false" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

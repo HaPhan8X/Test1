@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+                                "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://tinhvan.com/tvo</namespace>
+	<tag>
+		<tag-name>tvo-paging</tag-name>
+		<source>paging.xhtml</source>
+	</tag>
+	<tag>
+		<tag-name>tvo-menu</tag-name>
+		<source>menu.xhtml</source>
+	</tag>
+</facelet-taglib>

@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+           Movie List
+    </ui:define>
+		<ui:define name="search">
+			<h:form>
+				<div class="search_box left">
+					<h:inputText value="#{movieManagedBean.searchKeyword}"
+						styleClass="input-search left fs11">
+						<p:ajax event="blur" />
+					</h:inputText>
+					<h:commandLink styleClass="btn-search"
+						actionListener="#{movieManagedBean.doSearch()}" />
+				</div>
+			</h:form>
+		</ui:define>
+		<ui:define name="body">
+			<script type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+			<h:form id="frmMovie">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<p>
+								<br></br> <label class="bold">Movie Category</label>
+								<h:selectOneMenu value="#{movieManagedBean.selectedCategoryId}"
+									onchange="submit()"
+									valueChangeListener="#{movieManagedBean.cbbCategoryChange}">
+									<f:selectItem itemLabel="" itemValue="0" />
+									<f:selectItems value="#{movieManagedBean.lsShowCategory}"
+										var="category" itemLabel="#{category.name}"
+										itemValue="#{category.id}" />
+								</h:selectOneMenu>
+							</p>
+							<br></br>
+							<p:dataTable id="movieTable" headerClass="table-header"
+								styleClass="table-boder"
+								value="#{movieManagedBean.showDataModel}" var="movie"
+								width="100%">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{movie.select}"
+										style="width:10px;" styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Title
+							</f:facet>
+									<h:commandLink action="#{movieManagedBean.edit}"
+										styleClass="global-text-link" value="#{movie.title}"
+										immediate="true">
+										<f:param value="#{movie.id}" name="currMovieId"></f:param>
+									</h:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Category Name
+							</f:facet>
+									<h:outputText value="#{movie.tblShowCategory.name}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Require Level
+							</f:facet>
+									<h:outputText value="#{movie.tblLevel.id}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Xp
+							</f:facet>
+									<h:outputText value="#{movie.xp}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Money Gold
+							</f:facet>
+									<h:outputText value="#{movie.moneyGold}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Money Coin
+							</f:facet>
+									<h:outputText value="#{movie.moneyCoin}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Estimate Viewer
+							</f:facet>
+									<h:outputText value="#{movie.estimatedViewer}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Love Point
+							</f:facet>
+									<h:outputText value="#{movie.lovePoint}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Duration
+							</f:facet>
+									<h:outputText value="#{movie.duration}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+								Episode
+							</f:facet>
+									<h:outputText value="#{movie.numberOfEpisodes}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging currentPage="#{movieManagedBean.currentPage}"
+									limit="#{movieManagedBean.limit}"
+									total="#{movieManagedBean.totalRecords}"
+									endPage="#{movieManagedBean.endPage}"
+									actionBean="movieManagedBean" />
+							</div>
+							<div style="margin-top: 7px; float: left;" class="pbutton">
+								<h:commandButton action="#{movieManagedBean.add}" value="Add"
+									styleClass="global-btn" />
+								<h:commandButton action="#{movieManagedBean.delete}"
+									value="Delete" styleClass="global-btn"
+									onclick="if (!confirm('Do you want to delete record?')) return false" />
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<!-- .pagination ends -->
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</f:view>
+</html>

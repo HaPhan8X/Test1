@@ -1,0 +1,138 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/adminLayout.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:tvo="http://tinhvan.com/tvo"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="title">
+            Screen Management
+        </ui:define>
+	<ui:define name="body">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+		<!-- Form list -->
+		<h:form id="frmListScreenPlay">
+			<div class="main">
+				<div class="main-container">
+					<div class="main-content">
+						<f:metadata>
+							<f:event type="preRenderView" listener="#{gameBean.doSearch()}" />
+						</f:metadata>
+						<div style="height: 25px; margin-left: 0px">
+							<h:messages id="msg" for="globalMessage" errorClass="error"
+								infoClass="success" />
+						</div>
+						<h:inputHidden id="globalMessage"></h:inputHidden>
+						<div class="left mright mbottom" style="width: 100%">
+							<label class="bold">Select a game</label>
+							<h:selectOneMenu value="#{gameBean.selectedGame}"
+								onchange="submit()" valueChangeListener="#{gameBean.changeGame}">
+								<f:selectItems value="#{gameBean.gameList}" var="game"
+									itemLabel="#{game.name}" itemValue="#{game.id}" />
+							</h:selectOneMenu>
+						</div>
+						<div class="left" style="width: 100%; padding: 0">
+							<p:dataTable id="screenPlayTable" var="game"
+								styleClass="table-boder" headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								value="#{gameBean.detailList}">
+								<p:column>
+									<f:facet name="header">
+										ID
+									</f:facet>
+									<h:outputText value="#{game.game.id}"></h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										Name
+									</f:facet>
+									<h:outputText value="#{game.game.name}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Date
+									</f:facet>
+									<h:outputText value="#{game.date}">
+										<f:convertDateTime pattern="dd-MM-yyyy" timeZone="GMT+7" />
+									</h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Resource
+									</f:facet>
+									<p:commandLink actionListener="#{gameBean.prepare}"
+										oncomplete="dlgXmlEdit.show()" update=":frmImage"
+										styleClass="global-text-link" value="#{game.resource}"
+										immediate="true">
+										<f:param value="#{game.id}" name="gameDetailId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<c:if test="#{gameBean.isFindDiff(gameBean.selectedGame)}">
+								<p:column>
+									<f:facet name="header">
+										Image
+									</f:facet>
+									<h:outputText value="#{game.image}"></h:outputText>
+								</p:column>
+								</c:if>
+							</p:dataTable>
+						</div>
+						<div class="pagination right">
+							<tvo:tvo-paging currentPage="#{gameBean.currentPage}"
+								limit="#{gameBean.limit}" total="#{gameBean.totalRecords}"
+								endPage="#{gameBean.endPage}" actionBean="gameBean" />
+						</div>
+
+						<div class="pbutton" style="margin-top: 7px; float: left;">
+							<h:commandButton styleClass="global-btn" action="#{gameBean.prepareCreate}"
+								value="Upload Screen" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+		<p:dialog header="Update XML file" width="460" modal="true"
+			widgetVar="dlgXmlEdit" resizable="false" height="50">
+			<h:form id="editXml" enctype="multipart/form-data">
+				<p:fileUpload id="fileIn" value="#{gameBean.file}" mode="simple"
+					sizeLimit="1000000" allowTypes="/(\.|\/)(xml)$/" />
+				<p:commandButton styleClass="btnAdd" ajax="false"
+					update=":frmListScreenPlay" actionListener="#{gameBean.editXml}"
+					value="Upload XML" oncomplete="dlgXmlEdit.hide()">
+				</p:commandButton>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Upload new Screen" width="460" modal="true"
+			widgetVar="dlgImage" resizable="false" height="200">
+			<h:form id="frmImage" enctype="multipart/form-data" prependId="false">
+				<p>
+					<h:messages id="msgCreate" infoClass="message success"
+						errorClass="message error" />
+				</p>
+				<p:fileUpload fileUploadListener="#{gameBean.handleFileUpload}"
+					mode="advanced" dragDropSupport="false" multiple="true"
+					update=":frmListScreenPlay" sizeLimit="10000000" fileLimit="2"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" oncomplete="dlgImage.hide()" />
+				<p:growl id="messages" showDetail="true" />
+				<div
+					style="background: no-repeat center; height: 100px; margin: 20px auto">
+					<p style="margin-top: 10px;">
+						<label class="bold">Game : </label>
+						<h:outputText value="#{gameBean.gameModel.game.name}" />
+					</p>
+					<p style="margin-top: 10px;">
+						<label class="bold">Resource : </label>
+						<h:outputText value="#{gameBean.gameModel.resource}" />
+					</p>
+				</div>
+			</h:form>
+		</p:dialog>
+		
+	</ui:define>
+</ui:composition>

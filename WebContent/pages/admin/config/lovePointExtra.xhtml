@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          Love Point Extra
+     </ui:define>
+		<ui:define name="body">
+			<script type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+			<!-- Form list-->
+			<h:form id="frmLovePointExtraList">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{lovePointConfigManagedBean.doSearch()}" />
+							</f:metadata>
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<p:dataTable id="lovePointExtraTable" styleClass="order-table"
+								headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								value="#{lovePointConfigManagedBean.lsLovePointExtraDTO}"
+								var="lovePointExtra" width="100%">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{lovePointExtra.select}"
+										styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Love Point Rate
+								</f:facet>
+									<p:commandLink
+										actionListener="#{lovePointConfigManagedBean.edit}"
+										oncomplete="dlgEdit.show()" update=":frmEdit"
+										styleClass="global-text-link"
+										value="#{lovePointExtra.lovepoint}" immediate="true">
+										<f:param value="#{lovePointExtra.id}"
+											name="currLovePointExtraId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Increase Rate
+								</f:facet>
+									<h:outputText value="#{lovePointExtra.increaseRate}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging
+									currentPage="#{lovePointConfigManagedBean.currentPage}"
+									limit="#{lovePointConfigManagedBean.limit}"
+									total="#{lovePointConfigManagedBean.totalRecords}"
+									endPage="#{lovePointConfigManagedBean.endPage}"
+									actionBean="lovePointConfigManagedBean" />
+							</div>
+							<!-- .pagination ends -->
+							<div style="margin-top: 7px; float: left;" class="pbutton">
+								<p:commandButton styleClass="btnAdd"
+									actionListener="#{lovePointConfigManagedBean.add}" value="Add"
+									oncomplete="dlgCreate.show()" update=":frmCreate">
+								</p:commandButton>
+								<p:commandButton action="#{lovePointConfigManagedBean.delete}"
+									value="Delete" styleClass="btnDel"
+									update=":frmLovePointExtraList"
+									oncomplete="addCheckAllListener();"
+									onclick="if (!confirm('Do you want to delete record?')) return false" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- end form List -->
+			<!-- create  form -->
+			<p:dialog header="Create Love Point Extra" modal="true"
+				widgetVar="dlgCreate" resizable="false">
+				<h:form id="frmCreate" enctype="multipart/form-data"
+					prependId="false">
+					<p>
+						<h:messages id="msgCreate" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div style="background: no-repeat center; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">Love Point Rate</label>
+							<h:inputText
+								value="#{lovePointConfigManagedBean.lovePointExtraDTO.lovepoint}"
+								required="true" requiredMessage="Love Point Rate is required"
+								converterMessage="Coin Extra must be number"
+								styleClass="text medium" maxlength="9" />
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Increase Rate</label>
+							<h:inputText
+								value="#{lovePointConfigManagedBean.lovePointExtraDTO.increaseRate}"
+								required="true" requiredMessage="IncreaseRate is required"
+								converterMessage="IncreaseRate must be number"
+								styleClass="text medium" maxlength="9" />
+						</p>
+					</div>
+					<div
+						style="background: no-repeat center; height: 30px; margin: 20px auto"
+						class="pbutton">
+						<p:commandButton action="#{lovePointConfigManagedBean.create}"
+							value="Create" styleClass="global-btn"
+							update="msgCreate,:frmLovePointExtraList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{lovePointConfigManagedBean.cancel}"
+							value="Cancel" update=":frmLovePointExtraList"
+							styleClass="global-btn" onclick="dlgCreate.hide();"
+							immediate="true" oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end create category form  -->
+			<!-- edit Level form -->
+			<p:dialog header="Edit Love Point Extra" modal="true"
+				widgetVar="dlgEdit" resizable="false">
+				<h:form id="frmEdit" enctype="multipart/form-data" prependId="false">
+					<p>
+						<h:messages id="msgEdit" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div style="background: no-repeat center; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">Love Point Rate</label>
+							<h:inputText
+								value="#{lovePointConfigManagedBean.lovePointExtraDTO.lovepoint}"
+								required="true" requiredMessage="Love Point Rate is required"
+								converterMessage="Coin Extra must be number"
+								styleClass="text medium" maxlength="9" />
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Increase Rate</label>
+							<h:inputText
+								value="#{lovePointConfigManagedBean.lovePointExtraDTO.increaseRate}"
+								required="true" requiredMessage="IncreaseRate is required"
+								converterMessage="IncreaseRate must be number"
+								styleClass="text medium" maxlength="9" />
+						</p>
+					</div>
+					<div
+						style="background: no-repeat center; height: 30px; margin: 20px auto"
+						class="pbutton">
+						<p:commandButton action="#{lovePointConfigManagedBean.update}"
+							value="Update" styleClass="global-btn"
+							update="msgEdit,frmLovePointExtraList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{lovePointConfigManagedBean.cancel}"
+							value="Cancel" styleClass="global-btn" onclick="dlgEdit.hide();"
+							immediate="true" update=":frmLovePointExtraList"
+							oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end edit Level form -->
+			<script type="text/javascript">
+			function handleCreateRequest(xhr, status, args) 
+			{
+				if(args.validationFailed || !args.createSuccess) 
+				{
+					//do nothing
+				} 
+				else 
+				{
+					dlgCreate.hide();
+					dlgEdit.hide();
+					addCheckAllListener();
+				}
+			}
+		</script>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

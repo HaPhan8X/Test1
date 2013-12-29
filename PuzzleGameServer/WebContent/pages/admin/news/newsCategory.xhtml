@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          News Category List
+    </ui:define>
+		<ui:define name="search">
+			<h:form>
+				<div class="search_box left">
+					<h:inputText value="#{newsCategoryManagedBean.searchKeyword}"
+						styleClass="input-search left fs11">
+						<p:ajax event="blur" />
+					</h:inputText>
+					<h:commandLink styleClass="btn-search"
+						actionListener="#{newsCategoryManagedBean.doSearch()}" />
+				</div>
+			</h:form>
+		</ui:define>
+		<ui:define name="body">
+			<script type="text/javascript"
+				src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+			<!-- Form list-->
+			<h:form id="frmNewsCategoryList">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<p:dataTable id="newsCategoryTable" styleClass="order-table"
+								headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								value="#{newsCategoryManagedBean.lsNewsCategoryDTOs}"
+								var="newsCategory" width="100%">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{newsCategory.select}"
+										styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Name
+								</f:facet>
+									<p:commandLink actionListener="#{newsCategoryManagedBean.edit}"
+										oncomplete="dlgEdit.show()" update=":frmEdit"
+										styleClass="global-text-link" value="#{newsCategory.name}"
+										immediate="true">
+										<f:param value="#{newsCategory.id}" name="currNewsCategoryId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Require Level
+								</f:facet>
+									<h:outputText value="#{newsCategory.tblLevel.id}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging
+									currentPage="#{newsCategoryManagedBean.currentPage}"
+									limit="#{newsCategoryManagedBean.limit}"
+									total="#{newsCategoryManagedBean.totalRecords}"
+									endPage="#{newsCategoryManagedBean.endPage}"
+									actionBean="newsCategoryManagedBean" />
+							</div>
+							<!-- .pagination ends -->
+							<div style="margin-top: 7px; float: left;" class="pbutton">
+								<p:commandButton styleClass="btnAdd"
+									actionListener="#{newsCategoryManagedBean.add}" value="Add"
+									oncomplete="dlgCreate.show()" update=":frmCreate">
+								</p:commandButton>
+								<p:commandButton action="#{newsCategoryManagedBean.delete}"
+									value="Delete" styleClass="btnDel"
+									update=":frmNewsCategoryList"
+									oncomplete="addCheckAllListener();"
+									onclick="if (!confirm('Do you want to delete record?')) return false" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- end form List -->
+			<!-- create category form -->
+			<p:dialog header="Create News Category" width="450" modal="true"
+				widgetVar="dlgCreate" resizable="false" height="400">
+				<h:form id="frmCreate" enctype="multipart/form-data"
+					prependId="false">
+					<p>
+						<h:messages id="msgCreate" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div class="rbt_img">
+						<p:graphicImage id="image_create"
+							value="#{newsCategoryManagedBean.imageData != null ? newsCategoryManagedBean.imageData : '/resources/images/no-images.png'}"
+							width="98" height="98" style="margin: 7px" cache="false" />
+					</div>
+					<div
+						style="background: no-repeat center; width: 112px; height: 50px; margin-left: 210px;">
+						<p:fileUpload
+							fileUploadListener="#{newsCategoryManagedBean.handleFileUpload}"
+							label="Change Image" auto="true" mode="advanced"
+							update="frmCreate:image_create,msgCreate" />
+					</div>
+					<div
+						style="background: no-repeat center; height: 100px; margin: 20px auto">
+						<p style="margin-top: 10px;">
+							<label class="bold">Require Level</label>
+							<h:selectOneMenu
+								value="#{newsCategoryManagedBean.selectedLevelId}">
+								<f:selectItems value="#{newsCategoryManagedBean.lsLevelDTO}"
+									var="level" itemLabel="#{level.id}" itemValue="#{level.id}" />
+							</h:selectOneMenu>
+						</p>
+						<p style="margin-top: 10px;">
+							<label class="bold">News Category Name</label>
+							<h:inputText id="categoryNameCreate" label="News Category Name"
+								value="#{newsCategoryManagedBean.newsCategoryDTO.name}"
+								required="true" requiredMessage="News Category Name is required"
+								styleClass="text medium" maxlength="50">
+								<f:validator validatorId="textInputValidator"></f:validator>
+							</h:inputText>
+						</p>
+					</div>
+					<div
+						style="background: no-repeat center; height: 30px; margin: 0 auto"
+						class="pbutton">
+						<p:commandButton
+							action="#{newsCategoryManagedBean.createNewsCategory}"
+							value="Create" styleClass="global-btn"
+							update="msgCreate,:frmNewsCategoryList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{newsCategoryManagedBean.cancel}"
+							value="Cancel" update=":frmNewsCategoryList"
+							styleClass="global-btn" onclick="dlgCreate.hide();"
+							immediate="true" oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end create category form  -->
+			<!-- edit category form -->
+			<p:dialog header="Edit Item Category" width="600" modal="true"
+				widgetVar="dlgEdit" resizable="false">
+				<h:form id="frmEdit" enctype="multipart/form-data" prependId="false">
+					<p>
+						<h:messages id="msgEdit" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div class="rbt_img">
+						<p:graphicImage id="image_Edit"
+							value="#{newsCategoryManagedBean.imageData != null ? newsCategoryManagedBean.imageData : '/resources/images/no-images.png'}"
+							width="98" height="98" style="margin: 7px" cache="false" />
+					</div>
+					<div
+						style="background: no-repeat center; width: 112px; height: 50px; margin-left: 210px;">
+						<p:fileUpload
+							fileUploadListener="#{newsCategoryManagedBean.handleFileUpload}"
+							label="Change Image" auto="true" mode="advanced"
+							update="frmEdit:image_Edit,msgEdit" />
+					</div>
+					<div
+						style="background: no-repeat center; width: 160px; height: 300px; margin: 0 auto">
+						<p>
+							<label>Require Level</label>
+							<h:selectOneMenu
+								value="#{newsCategoryManagedBean.selectedLevelId}">
+								<f:selectItems value="#{newsCategoryManagedBean.lsLevelDTO}"
+									var="level" itemLabel="#{level.id}" itemValue="#{level.id}" />
+							</h:selectOneMenu>
+						</p>
+						<p>
+							<label>News Category Name</label>
+							<h:inputText id="categoryNameEdit" label="News Category Name"
+								value="#{newsCategoryManagedBean.newsCategoryDTO.name}"
+								required="true" requiredMessage="Present Name is required"
+								styleClass="text medium" maxlength="50">
+								<f:validator validatorId="textInputValidator"></f:validator>
+							</h:inputText>
+						</p>
+					</div>
+					<div
+						style="background: no-repeat center; width: 160px; height: 30px; margin: 0 auto">
+						<p>
+							<p:commandButton action="#{newsCategoryManagedBean.update}"
+								value="Update" styleClass="submit mid"
+								update="msgEdit,:frmNewsCategoryList"
+								oncomplete="handleCreateRequest(xhr, status, args)" />
+							<p:commandButton action="#{newsCategoryManagedBean.cancel}"
+								value="Cancel" styleClass="submit mid" onclick="dlgEdit.hide();"
+								immediate="true" update=":frmNewsCategoryList"
+								oncomplete="addCheckAllListener();" />
+						</p>
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end edit category form -->
+			<script type="text/javascript">
+			function handleCreateRequest(xhr, status, args) {
+				if(args.validationFailed || !args.createSuccess) {
+				} else {
+					dlgCreate.hide();
+					dlgEdit.hide();
+					addCheckAllListener();
+				}
+			}
+		</script>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

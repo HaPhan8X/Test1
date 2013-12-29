@@ -1,0 +1,1006 @@
+/*
+	This is css for RBT project of Mobafone
+	Create by: khanhvd - TVO
+	Create date: 20/10/2011
+	Version: 1.0
+*/
+@charset "utf-8";
+/* CSS Document */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/*  CSS for all pages */
+body {
+	background: #ccc;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	color: #33333;
+	margin: 0px;
+	padding: 0px;
+}
+
+#main_wrap {
+	position: relative;
+	width: 1000px;
+	margin: 0px auto;
+}
+
+#main {
+	position: relative;
+	width: 100%;
+	float: left;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+.width50 {
+	width: 50%;
+}
+
+.width35 {
+	width: 35%;
+}
+
+.width65 {
+	width: 65%;
+}
+
+.width40 {
+	width: 40%;
+}
+
+.width45 {
+	width: 45%;
+}
+
+.width60 {
+	width: 60%;
+}
+
+.width55 {
+	width: 55%;
+}
+
+.width100 {
+	width: 100%;
+	margin-bottom: 25px;
+}
+
+h1,h2,h3,h4,h5 {
+	margin: 0;
+	padding: 0
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul {
+	margin: 0;
+	list-style: none;
+}
+
+ul li {
+	padding: 0;
+}
+
+img {
+	border: none;
+}
+
+table {
+	vertical-align: top;
+}
+
+/* format for font-size */
+.fs11 {
+	font-size: 11px;
+}
+
+.fs12 {
+	font-size: 12px;
+}
+
+.fs18 {
+	font-size: 18px;
+}
+
+.fs20 {
+	font-size: 20px;
+}
+
+/* format for margin */
+.mleft {
+	margin-left: 10px
+}
+
+.mright {
+	margin-right: 10px
+}
+
+.mtop {
+	margin-top: 10px;
+}
+
+.mbottom {
+	margin-bottom: 10px;
+}
+
+/* format for table */
+.center {
+	width: 100%;
+	text-align: center;
+}
+
+.data_table {
+	width: 828px;
+	margin: 10px;
+}
+
+.table_left,.table_right {
+	width: 350px;
+}
+
+.data_table table tr:hover {
+	background: #d1dfff;
+}
+
+.overflow {
+	overflow-x: scroll
+}
+
+.overflow-y {
+	overflow-y: scroll
+}
+
+/* format for form */
+.line_row_form {
+	float: left;
+	margin: 5px 0;
+	width: 100%;
+}
+
+/* format for label */
+label {
+	float: left;
+	text-align: left;
+	margin-right: 5px;
+	color: #0E385F;
+	width: 210px;
+}
+
+.label40 {
+	width: 40px;
+}
+
+.label80 {
+	width: 80px;
+}
+
+.label100 {
+	width: 100px;
+}
+
+.label120 {
+	width: 120px;
+}
+
+.label160 {
+	width: 160px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+/* format for select */
+select,textarea {
+	background: #ffffff !important;
+	outline: none;
+	border: 1px solid #999999;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 190px;
+}
+
+input[type="text"] {
+	background: #ffffff !important;
+	outline: none;
+	border: 1px solid #999999;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 160px;
+}
+
+select,.select_w {
+	width: 120px
+}
+
+select.select_top {
+	margin: 5px;
+}
+
+/* format for textarea */
+textarea {
+	height: 100px;
+	resize: none;
+	overflow-y: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+}
+
+.text_area_1,.text_area_2 {
+	width: 100%;
+	border: none;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.text_area_1 {
+	height: 100px;
+}
+
+.text_area_2 {
+	height: 175px;
+}
+
+/* format for all button and icon */
+.button_bottom {
+	width: 100%;
+	float: left;
+	margin-top: 10px;
+}
+
+.button_bottom_page {
+	float: left;
+	margin: 10px;
+}
+
+.btn_add,.btn_delete {
+	border: none;
+	width: 16px;
+	height: 16px;
+}
+
+.btn_add {
+	background: url("../images/ico_add.png") no-repeat;
+}
+
+.btn_delete {
+	background: url("../images/ico_delete.png") no-repeat;
+}
+
+.btn_des,.btn_asc {
+	width: 37px;
+	height: 30px;
+	border: none;
+}
+
+.btn_des {
+	background: url("../images/btn_za.png") no-repeat;
+}
+
+.btn_asc {
+	background: url("../images/btn_az.png") no-repeat;
+}
+
+.btn_red,.btn_grey {
+	padding: 2px 5px;
+	border: none;
+	font-size: 11px;
+	font-weight: bold;
+	border: none;
+}
+
+.btn_red {
+	color: #fff;
+	background: #0e3f6a;
+	cursor: pointer;
+	border-radius: 4px 4px 4px 4px;
+	float: left;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin-right: 5px;
+	text-decoration: none;
+}
+
+.btn_red:hover {
+	background: #236EAF;
+	text-decoration: none;
+}
+
+.btn_grey,.btn_grey:hover {
+	color: #000;
+	background: #ccc;
+	border: 1px solid #aaa;
+}
+
+.btn_select_all {
+	background: url("../images/btn_selectall.png") no-repeat;
+	border: none;
+	width: 74px;
+	height: 25px;
+	color: #fff;
+	font-weight: bold;
+	font-size: 11px;
+}
+
+.btn_publish,.btn_unpublish {
+	width: 16px;
+	height: 16px;
+	margin-left: 15px;
+}
+
+.btn_publish {
+	background: url("../images/ico_publish.png") no-repeat;
+}
+
+.btn_unpublish {
+	background: url("../images/ico_unpublish.png") no-repeat;
+}
+
+.btn_preview,.btn_active,.btn_like {
+	width: 18px;
+	height: 18px;
+	border: none;
+}
+
+.btn_preview {
+	background: url("../images/ico_preview.png") no-repeat;
+}
+
+.btn_active {
+	background: url("../images/ico_active.png") no-repeat;
+}
+
+.btn_like {
+	background: url("../images/ico_like.png") no-repeat;
+}
+
+.btn_copyall,.btn_copy,.btn_removeall,.btn_remove {
+	width: 110px;
+	height: 31px;
+	border: none;
+}
+
+.btn_copyall {
+	background: url("../images/btn_copyall.png") no-repeat;
+}
+
+.btn_copy {
+	background: url("../images/btn_copy.png") no-repeat;
+}
+
+.btn_removeall {
+	background: url("../images/btn_removeall.png") no-repeat;
+}
+
+.btn_remove {
+	background: url("../images/btn_remove.png") no-repeat;
+}
+
+.btn_download {
+	background: url("../images/ico_download.png") no-repeat;
+	width: 24px;
+	height: 24px;
+	border: none;
+}
+
+/**************** Ajax loading ********************/
+#ajaxStatusPanel {
+	position: fixed;
+	right: 40%;
+	top: 40%;
+}
+/**************** Page Title ********************/
+.page_title {
+	background: url("../images/bg_pagetitle.png") repeat-x left;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	color: #000;
+	font-weight: bold;
+	text-align: center;
+	height: 25px;
+	padding-top: 5px;
+	width: 100%;
+}
+
+.position_top {
+	position: absolute;
+	right: 0px;
+	top: 89px;
+}
+
+/*  CSS for header */
+#header { /*background: url(../images/bg_header.jpg) left repeat-x;*/
+	background-color: #0e3f6a;
+	color: #fff;
+	height: 50px;
+	text-align: center;
+	width: 100%;
+}
+
+#header .header_right {
+	position: absolute;
+	right: 10px;
+	top: 16px;
+}
+
+/*  CSS for search */
+.input-search {
+	width: 150px;
+	border: none;
+	display: block;
+	background-color: #FFF;
+	padding: 3px 0 3px 5px
+}
+
+.btn-search {
+	background: url('../images/btn_search.jpg') no-repeat;
+	height: 22px;
+	width: 31px;
+	border: none;
+	float: left;
+}
+
+/*******************  Menu Left   ****************/
+.col-left {
+	width: 150px;
+	height: 695px;
+	display: block;
+	text-align: left;
+	float: left;
+	background: #f1f2f3;
+}
+
+.block-title {
+	background-color: #AE1215;
+	border-bottom: 2px solid #870000;
+	color: #fff;
+	float: left;
+	padding: 7px 0 0 0;
+	height: 26px;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+}
+
+a.homemenu,a.artistmenu,a.genremenu,a.categorymenu,a.videomenu,a.accountmenu a.friendmenu a.prefermenu,a.languagemenu
+	{
+	float: left;
+	padding-left: 25px;
+	padding-top: 2px;
+	margin: 0 0 0 5px;
+	color: #333;
+	font-weight: bold;
+}
+
+a.homemenu {
+	background: url(../images/ico_home.png) no-repeat left center;
+}
+
+a.artistmenu {
+	background: url(../images/ico_artist.png) no-repeat left center;
+}
+
+a.genremenu {
+	background: url(../images/ico_genre.png) no-repeat left center;
+}
+
+a.categorymenu {
+	background: url(../images/ico_category.png) no-repeat left center;
+}
+
+a.videomenu {
+	background: url(../images/ico_video.png) no-repeat left center;
+}
+
+a.accountmenu {
+	background: url(../images/ico_account.png) no-repeat left center;
+}
+
+a.friendmenu {
+	background: url(../images/ico_friend.png) no-repeat left center;
+}
+
+a.prefermenu {
+	background: url(../images/ico_preference.png) no-repeat left center;
+}
+
+a.languagemenu {
+	background: url(../images/ico_language.png) no-repeat left center;
+}
+
+.btn-english,.btn-germany,.btn-indonesia {
+	float: left;
+	width: 22px;
+	height: 17px;
+	margin: 1px 5px;
+	padding: 0 0 0 30px;
+}
+
+.btn-english {
+	background: url(../images/ico_english.gif) no-repeat;
+}
+
+.btn-germany {
+	background: url(../images/ico_germany.gif) no-repeat;
+}
+
+.btn-indonesia {
+	background: url(../images/ico_indo.gif) no-repeat;
+}
+
+.accordion-toggle {
+	background: url(../images/ico_+.png) no-repeat 0 0;
+	cursor: pointer;
+	*cursor: hand;
+}
+
+.accordion-toggle-active {
+	background: url(../images/ico_-.png) no-repeat 0 0;
+	cursor: pointer;
+	*cursor: hand;
+}
+
+/*************  END MENU LEFT************/
+
+/************ START FOOTER ***************/
+#footer {
+	height: 30px;
+	/*background: url(../images/bg_header.jpg) left center repeat-x;*/
+	background-color: #0e3f6a;
+	color: #ccc;
+	width: 100%;
+	float: right;
+	text-align: center;
+}
+
+.copyright {
+	height: 20px;
+	width: 100%;
+	text-align: center;
+	margin-top: 5px;
+}
+
+/*************  START MANAGE TOP ************/
+#manage_top {
+	background-color: #236eaf;
+	/*border-bottom: 2px solid #870000;*/
+	float: right;
+	height: 33px;
+	margin: 0;
+	width: 100%;
+}
+
+.search_box {
+	height: 22px;
+	margin: 6px 0 0 10px;
+	float: left;
+}
+
+input.advancesearch {
+	color: #000;
+	background: url("../images/bg_pagetitle.png") repeat-x left;
+	margin: 0 0 0 10px;
+	padding: 3px 5px;
+	border: none;
+}
+
+input.advancesearch:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+/************* END MANAGE TOP ************/
+
+/************* START CONTENT  ****************/
+.content_pannel {
+	text-align: left;
+	width: 100%;
+	float: right;
+	background: #fff;
+	min-height: 600px;
+	height: auto;
+}
+
+/* Fix cho IE */
+/*\*/
+* html .content_pannel {
+	height: 550px;
+}
+
+.main-scroll-pane {
+	height: 631px;
+	overflow: hidden;
+}
+
+.menu-scroll-pane {
+	height: 480px;
+	overflow: hidden;
+}
+
+/* Fix rbt list, artist list , genre list , video list */
+.rbt_img {
+	background: url("../images/bg_img_item.png") no-repeat top center;
+	width: 112px;
+	height: 112px;
+	margin-left: 210px;
+}
+
+.event_img {
+	background: url("../images/bg_img_item.png") no-repeat top center;
+	width: 112px;
+	height: 112px;
+	margin-left: 434px;
+}
+
+.item_rbt,.item_genre,.item_artist,.item_video,.item_category {
+	font-size: 11px;
+	margin: 7px;
+	width: 12.6%;
+	height: 140px;
+}
+
+.item_genre .rbt_img img,.item_artist .rbt_img img,.item_video .rbt_img img,.item_category .rbt_img img
+	{
+	margin: 7px;
+}
+
+/* For RBT List */
+.item_rbt_info {
+	width: 100px;
+	margin: 0 auto;
+}
+
+.rbt_name,.rbt_action {
+	width: 100%;
+	font-size: 11px;
+	text-align: center;
+	overflow: hidden;
+	line-height: 16px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	color: #333;
+}
+
+.rbt_name {
+	font-weight: bold;
+}
+
+.artist_name {
+	width: 100%;
+	text-align: center;
+	color: #999;
+}
+
+/************** CSS for RBT Info **************/
+.rbt_item {
+	width: 849px;
+	background: #191919;
+	float: left;
+}
+
+/************** CSS for Manage Contract **************/
+.contract_item {
+	background: #f1f2f4;
+	border: 1px solid #ddd;
+	text-align: left;
+	overflow: hidden;
+}
+
+/************** CSS for Update Account **************/
+.bg_small_group {
+	background: url(../images/bg_pagetitle.png) repeat-x;
+	padding: 0 10px;
+	color: #000;
+	font-weight: bold;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+}
+
+.group_content_small {
+	width: 350px;
+	background-color: #f0f0f0;
+	padding: 0 10px 10px 10px;
+	margin-bottom: 10px;
+	border: 1px solid #D4D4D4;
+}
+
+.acc_box {
+	background: #fff;
+	border: 1px solid #ddd;
+	padding: 2px;
+	float: left;
+	width: 318px;
+	height: 20px
+}
+
+/**********************************************************/
+/************** CSS for all red group radius **************/
+.group_left {
+	width: 410px;
+	margin: 10px 0 0 10px;
+}
+
+.group_right {
+	width: 410px;
+	margin: 10px 8px 0 0;
+}
+
+.group_full {
+	margin: 10px 10px 0 10px;
+}
+
+.bg_group_header {
+	height: 25px;
+}
+
+.group_content1x,.group_content2x {
+	width: 398px;
+}
+
+.group_content_full {
+	width: 818px;
+}
+
+.group_content1x,.group_content2x,.group_content_full {
+	padding: 0 5px;
+	border-left: #d4d4d4 solid 1px;
+	border-right: #d4d4d4 solid 1px;
+	font-size: 12px;
+}
+
+.group_w410 {
+	width: 410px;
+	height: 33px;
+}
+
+.group_w830 {
+	width: 830px;
+	height: 33px;
+}
+
+.radius_corner_bottom410 {
+	width: 410px;
+	height: 8px;
+	background: url(../images/radius_line_bottom.png) repeat-x;
+}
+
+.radius_corner_bottom830 {
+	width: 830px;
+	height: 8px;
+	background: url(../images/radius_line_bottom.png) repeat-x;
+}
+
+.bg_left_corner,.bg_right_corner {
+	width: 8px;
+	height: 33px;
+}
+
+.bg_left_corner {
+	background: url(../images/radius_corner_left.png) no-repeat;
+}
+
+.bg_right_corner {
+	background: url(../images/radius_corner_right.png) no-repeat;
+}
+
+.bg_center_corner {
+	height: 33px;
+	background: url(../images/bg_grouptitle.png) repeat-x;
+	text-align: center;
+}
+
+.bg_center_corner span {
+	color: #fff;
+	font-weight: bold;
+	position: relative;
+	top: 2px;
+}
+
+.radius_corner_left_bottom,.radius_corner_right_bottom {
+	width: 7px;
+	height: 8px;
+}
+
+.radius_corner_left_bottom {
+	background: url(../images/radius_corner_left_bottom.png) no-repeat;
+}
+
+.radius_corner_right_bottom {
+	background: url(../images/radius_corner_right_bottom.png) no-repeat;
+}
+
+/************** Css for Paging **************/
+.page_btn {
+	position: relative;
+	top: 4px;
+	margin: 0px 3px 0px 0px;
+}
+
+/*
+.btn_paging_previous, .btn_paging_next{
+	width: 16px;
+	height: 16px;
+	margin: 2px 0 0 0;
+}
+
+.btn_paging_previous{background: url("../images/btn_paging_previous.gif");}
+.btn_paging_next{background: url("../images/btn_paging_next.gif");}
+*/
+.page_number,.page_number:hover,.page_number_selected {
+	border: 1px solid #CCCCCC;
+	font-size: 11px;
+	margin: 0 3px;
+	padding: 0 5px;
+}
+
+.page_number {
+	background: #fff;
+}
+
+.page_number:hover,.page_number_selected {
+	color: #ae1215;
+	background: #F5F5F5;
+}
+
+/************** Edit CSS by LE SON **************/
+.mtop_half {
+	margin-top: 5px;
+}
+
+.mright_half {
+	margin-right: 5px;
+}
+
+.btn_top_position {
+	position: absolute;
+	top: 85px;
+	width: 849px;
+}
+
+/************** Financial reports **************/
+.finacial_form {
+	margin: 0 auto;
+	background: #f5f5f5;
+	padding: 20px;
+	border: 1px solid #ccc;
+	width: 400px;
+}
+
+.financial table td {
+	padding: 5px;
+}
+
+.btn_financial {
+	color: #000;
+	background: url("../images/bg_pagetitle.png") repeat-x left;
+	padding: 1px 5px;
+	border: none;
+	width: 120px;
+	height: 25px;
+	border: 1px solid #999;
+}
+
+/* Format for Video Infor */
+.video_player {
+	margin: 10px auto;
+	width: 520px;
+}
+
+.main {
+	overflow: hidden;
+	width: 100%;
+}
+
+.main-container {
+	margin: 5px;
+	overflow: hidden;
+	border: 1px solid #DFDFDF;
+}
+
+.main-content {
+	margin: 5px;
+	overflow: hidden;
+}
+
+.ui-datatable-even {
+	background-color: #EEE !important;
+	font-family: 'arial';
+	font-size: 9pt;
+}
+
+.ui-datatable-odd {
+	background-color: #FFFFFF !important;
+	font-family: 'arial';
+	font-size: 9pt;
+}
+
+.table-header {
+	background-color: #236EAF;
+	color: #ffffff;
+	font-family: 'arial';
+	font-size: 9pt;
+}
+
+.global-btn {
+	background: #0e3f6a;
+	color: #ffffff !important;
+	cursor: pointer;
+	border-radius: 4px 4px 4px 4px;
+	float: left;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 5px 10px;
+	margin-right: 5px;
+	text-decoration: none;
+	border: none;
+}
+
+.table-boder,.order-table {
+	border: 1px solid #CCCCCC;
+}
+/*PAGING*/
+.pagination {
+	font-size: 13px;
+	margin-top: 5px;
+	color: blue;
+}
+
+.paging-item {
+	font-size: 13px;
+	margin: 3px;
+	color: blue !important;
+}
+
+.global-text-link {
+	color: blue !important;
+	text-decoration: underline;
+}
+
+.error-msg,.error {
+	color: red;
+	font-family: arial;
+	font-size: 12px;
+}
+
+.errorColumn {
+	color: red;
+	font-family: arial;
+	font-size: 12px;
+}
+
+.success-msg,.success {
+	color: #7CC502;
+	font-family: arial;
+	font-size: 12px;
+}
+
+.pbutton {
+	
+}
+
+.pbutton button {
+	background: #0E3F6A !important;
+	color: #FFFFFF;
+}
+
+.ui-widget button :hover {
+	background: red;
+}
+
+.width50 p {
+	margin: 0 0 5px 0;
+}

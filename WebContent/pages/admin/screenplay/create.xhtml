@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		
+		<ui:define name="title">
+          ScreenPlay Create
+     </ui:define>
+		<ui:define name="body">
+		
+			<div class="leftDiv"
+				style="float: left; width: 100%;padding: 20px; margin-left: 60px;">
+				<div style="height: 70px; margin-top: 0px;width: 100%;">
+					
+					<h:form style="margin-bottom: 30px;">
+						<p style="margin: 10px 0 0 10px;">
+							<label class="bold">Select game</label>
+
+							<h:selectOneMenu value="#{gameBean.selectedGame}"
+								onchange="submit()"
+								valueChangeListener="#{gameBean.changeCreateGame}">
+								<f:selectItems value="#{gameBean.gameList}" var="game"
+									itemLabel="#{game.name}" itemValue="#{game.id}" />
+							</h:selectOneMenu>
+						</p>
+						<div style="margin: 10px 0 0 10px">
+							<h:outputLabel styleClass="bold">Screen Date</h:outputLabel>
+							<p:calendar value="#{gameBean.date}" pattern="dd/MM/yyyy"
+								readOnlyInputText="true" style="width:150px;" required="true" mindate="#{gameBean.date}"
+								timeZone="GMT+7" >
+							<p:ajax event="dateSelect" listener="#{gameBean.handleDateSelect}" update="growl" /> 
+							</p:calendar>
+						</div>
+						<span style="color: red;">#{gameBean.error}</span>
+					</h:form>
+				</div>
+				<h:inputHidden id="globalMessage"></h:inputHidden>
+				<div class="upload-form" style="float: left;margin: 20px 0 0 0; width:30%; border-left: 1px solid #CCCCCC; ">
+				<h:form id="uploadFrm1" enctype="multipart/form-data" style="height:111px;">
+					<h4>
+						Level 1 : <span style="color: green;">
+							#{gameBean.xml[0]}</span>
+					</h4>
+					<p:fileUpload mode="advanced"
+						fileLimit="1" multiple="true" style="width:120px;"
+						fileUploadListener="#{gameBean.uploadXMLHandle1}" label="Select Xml"
+						sizeLimit="1000000" allowTypes="/(\.|\/)(xml)$/" auto="true"
+						update=":uploadFrm1">
+					</p:fileUpload>
+					<div style="height: 50px;">
+					<span style="color: red;"> #{gameBean.xmlErr[0]}</span>
+					<span style="color: red;">#{gameBean.imgErr[0]}</span>
+					</div>
+				</h:form>
+				<c:if test="#{gameBean.isFindDiff(gameBean.selectedGame)}">
+				<div id="uploadImgFrm1" 
+						style="margin: 0 0 30px 0; height:150px;">
+						<div>
+						<h:form id="frmImg1" enctype="multipart/form-data" style="width: 50%;float: left;"> 
+							<div class="rbt_img" style="margin-left: 10px;">
+							<p:graphicImage id="image_Edit1"
+								value="#{gameBean.imageDatas[0] != null ? gameBean.imageDatas[0] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div>
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 10px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle1}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+							fileLimit="1" label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg1,:uploadFrm1" />
+						</div>
+						</h:form>
+						<h:form id="frmImg2" enctype="multipart/form-data" style="width: 50%;float: left;">
+							<div class="rbt_img" style="margin-left: 0;float: left;">
+							<p:graphicImage id="image_Edit2"
+								value="#{gameBean.imageDatas[1] != null ? gameBean.imageDatas[1] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div> 
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 0px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle2}"
+							label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg2,:uploadFrm1" /></div>
+						</h:form>
+						</div>
+						
+				</div></c:if>
+				</div>
+				<div class="upload-form" style="float: left;margin: 20px 0 0 0;width:30%; border-left: 1px solid #CCCCCC; ">
+				<h:form id="uploadFrm2" enctype="multipart/form-data" style="height:111px;">
+					<h4>
+						Level 2 : <span style="color: green;">
+							#{gameBean.xml[1]}</span>
+					</h4>
+					
+					<p:fileUpload value="#{gameBean.file}" mode="advanced"
+						fileLimit="1" multiple="true" style="width:120px;"
+						fileUploadListener="#{gameBean.uploadXMLHandle2}" label="Select Xml"
+						sizeLimit="1000000" allowTypes="/(\.|\/)(xml)$/" auto="true"
+						update=":uploadFrm2">
+					</p:fileUpload>
+					<div style="height: 50px;">
+					<span style="color: red;"> #{gameBean.xmlErr[1]}</span>
+					<span style="color: red;">#{gameBean.imgErr[1]}</span>
+					</div>
+				</h:form>
+				<c:if test="#{gameBean.isFindDiff(gameBean.selectedGame)}">
+				<div id="uploadImgFrm2"
+						style="margin: 0 0 30px 0; height:150px;">
+						<div>
+						<h:form id ="frmImg3" enctype="multipart/form-data" style="width: 50%;float: left;"> 
+							<div class="rbt_img" style="margin-left: 10px;">
+							<p:graphicImage id="image_Edit3"
+								value="#{gameBean.imageDatas[2] != null ? gameBean.imageDatas[2] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div>
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 10px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle3}"
+							label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg3,:uploadFrm2" />
+						</div>
+						</h:form>
+						<h:form id ="frmImg4" enctype="multipart/form-data" style="width: 50%;float: left;">
+							<div class="rbt_img" style="margin-left: 0;float: left;">
+							<p:graphicImage id="image_Edit4"
+								value="#{gameBean.imageDatas[3] != null ? gameBean.imageDatas[3] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div> 
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 0px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle4}"
+							label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg4,:uploadFrm2" /></div>
+						</h:form>
+						</div>
+					</div></c:if>
+				</div>
+				<div class="upload-form" style="float: left;margin: 20px 0 0 0;width:30%; border-left: 1px solid #CCCCCC; ">
+				<h:form id="uploadFrm3" enctype="multipart/form-data" style="height:111px;">
+					<h4>
+						Level 3 : <span style="color: green;">
+							#{gameBean.xml[2]}</span>
+					</h4>
+					
+					<p:fileUpload value="#{gameBean.file}" mode="advanced"
+						fileLimit="1" multiple="true" style="width:120px;"
+						fileUploadListener="#{gameBean.uploadXMLHandle3}" label="Select Xml"
+						sizeLimit="1000000" allowTypes="/(\.|\/)(xml)$/" auto="true"
+						update=":uploadFrm3">
+					</p:fileUpload>
+					<div style="height: 50px;">
+					<span style="color: red;"> #{gameBean.xmlErr[2]}</span>
+					<span style="color: red;">#{gameBean.imgErr[2]}</span>
+					</div>
+				</h:form>
+				<c:if test="#{gameBean.isFindDiff(gameBean.selectedGame)}">
+				<div id="uploadImgFrm3"
+						style="margin: 0 0 30px 0; height:150px;">
+						<div>
+						<h:form id ="frmImg5" enctype="multipart/form-data" style="width: 50%;float: left;"> 
+							<div class="rbt_img" style="margin-left: 10px;">
+							<p:graphicImage id="image_Edit5"
+								value="#{gameBean.imageDatas[4] != null ? gameBean.imageDatas[4] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div>
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 10px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle5}"
+							label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg5,:uploadFrm3" />
+						</div>
+						</h:form>
+						<h:form id="frmImg6" enctype="multipart/form-data" style="width: 50%;float: left;">
+							<div class="rbt_img" style="margin-left: 0;float: left;">
+							<p:graphicImage id="image_Edit6"
+								value="#{gameBean.imageDatas[5] != null ? gameBean.imageDatas[5] : '/resources/images/no-images.png'}"
+								width="98" height="98" style="margin: 7px" cache="false" />
+							</div> 
+							<div
+							style="background: no-repeat center; width: 112px; height: 30px; margin-left: 0px;">
+							<p:fileUpload
+							fileUploadListener="#{gameBean.uploadImgHandle6}"
+							label="Select Image" auto="true" mode="advanced" style="width:100px;"
+							update=":frmImg6,:uploadFrm3" /></div>
+						</h:form>
+					</div>
+				</div></c:if>
+				</div>
+				
+				<div class="btn-submit" style="width: 100%;clear: both;">
+				<h:form>
+					<h:commandButton styleClass="global-btn" ajax="false"
+						update=":frmListScreenPlay" action="#{gameBean.uploadScreen}"
+						value="Save" oncomplete="handleCreateRequest(xhr, status, args)">
+					</h:commandButton>
+					<h:commandButton styleClass="global-btn" ajax="false"
+						update=":frmListScreenPlay" action="#{gameBean.clearFile}"
+						value="Clear">
+					</h:commandButton>
+				</h:form>
+				</div>
+				</div>	
+	
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>

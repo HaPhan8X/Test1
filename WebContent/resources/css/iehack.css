@@ -1,0 +1,22 @@
+/*
+	This is css fix for ie gt 7 of RBT project of Mobafone
+	Create by: khanhvd - TVO
+	Create date: 2/02/2012
+	Version: 1.0
+*/
+@charset "utf-8";
+/* CSS Document */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* Fix for category name in homepage */
+.category_name {
+	margin-top: -5px;
+}
+
+/* Fix image */
+.ui-state-disabled {
+	filter: none
+}

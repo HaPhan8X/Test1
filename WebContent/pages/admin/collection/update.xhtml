@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          Collection Update
+     </ui:define>
+		<ui:define name="body">
+			<h:form id="frmEditCollection" enctype="multipart/form-data"
+				prependId="false">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+							<p>
+								<h:messages id="msg" infoClass="message success"
+									errorClass="message error" />
+							</p>
+							<!-- upload area -->
+							<div class="width100 left">
+								<div class="rbt_img">
+									<p:graphicImage id="image_edit"
+										value="#{collectionManagedBean.imageData != null ? collectionManagedBean.imageData : '/resources/images/no-images.png'}"
+										width="98" height="98" style="margin: 7px" cache="false" />
+								</div>
+								<div
+									style="background: no-repeat center; width: 112px; height: 50px; padding-left: 210px;">
+									<p:fileUpload
+										fileUploadListener="#{collectionManagedBean.handleFileUpload}"
+										label="Change Image" auto="true" mode="advanced"
+										update="frmEditCollection:image_edit,msg" />
+								</div>
+							</div>
+							<div class="width100 left">
+								<div class="width50 left">
+									<div
+										style="background: no-repeat center; height: auto; margin: 0 auto">
+										<p>
+											<label class="bold">Collection Type</label>
+											<h:selectOneMenu
+												value="#{collectionManagedBean.selectedType}">
+												<f:selectItem itemLabel="System" itemValue="0" />
+												<f:selectItem itemLabel="Event" itemValue="1" />
+											</h:selectOneMenu>
+										</p>
+										<div class="error-msg"
+											style="margin-left: 214px; height: 18px">
+											<h:message for="collectionName"></h:message>
+										</div>
+										<p>
+											<label class="bold">Collection Name</label>
+											<h:inputText id="collectionName" label="Collection Name"
+												value="#{collectionManagedBean.currentCollection.name}"
+												required="true"
+												requiredMessage="Collection Name is required"
+												styleClass="text medium" maxlength="50">
+												<f:validator validatorId="textInputValidator"></f:validator>
+											</h:inputText>
+										</p>
+										<div class="error-msg"
+											style="margin-left: 214px; height: 18px">
+											<h:message for="earnCoin"></h:message>
+										</div>
+										<p>
+											<label class="bold">Earn Coin</label>
+											<h:inputText id="earnCoin" label="Earn Coin"
+												value="#{collectionManagedBean.currentCollection.earnCoin}"
+												required="true" requiredMessage="Earn Coin is required"
+												converterMessage="Earn Coin must be number"
+												styleClass="text medium" maxlength="9">
+												<f:validator validatorId="numberValidator" />
+											</h:inputText>
+										</p>
+										<div class="error-msg"
+											style="margin-left: 214px; height: 18px">
+											<h:message for="earnGold"></h:message>
+										</div>
+										<p>
+											<label class="bold">Earn Gold</label>
+											<h:inputText id="earnGold" label="Earn Gold"
+												value="#{collectionManagedBean.currentCollection.earnGold}"
+												required="true" requiredMessage="Earn Gold is required"
+												converterMessage="Earn Gold must be number"
+												styleClass="text medium" maxlength="9">
+												<f:validator validatorId="numberValidator" />
+											</h:inputText>
+										</p>
+										<div class="error-msg"
+											style="margin-left: 214px; height: 18px">
+											<h:message for="xp"></h:message>
+										</div>
+										<p>
+											<label class="bold">Xp</label>
+											<h:inputText id="xp" label="Xp"
+												value="#{collectionManagedBean.currentCollection.xp}"
+												required="true" requiredMessage="Xp is required"
+												converterMessage="Xp must be number"
+												styleClass="text medium" maxlength="9">
+												<f:validator validatorId="numberValidator" />
+											</h:inputText>
+										</p>
+										<div class="error-msg"
+											style="margin-left: 214px; height: 18px">
+											<h:message for="lovePoint"></h:message>
+										</div>
+										<p>
+											<label class="bold">Love Point</label>
+											<h:inputText id="lovePoint" label="Love Point"
+												value="#{collectionManagedBean.currentCollection.lovePoint}"
+												required="true" requiredMessage="Love Point is required"
+												converterMessage="Love Point  must be number"
+												styleClass="text medium" maxlength="9">
+												<f:validator validatorId="numberValidator" />
+											</h:inputText>
+										</p>
+									</div>
+								</div>
+								<div class="width50 right">
+									<p:dataTable id="droppableItemPanel" paginator="true" rows="10"
+										paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+										paginatorPosition="top" headerClass="order-table-header"
+										rowClasses="order-table-odd-row,order-table-even-row"
+										value="#{collectionManagedBean.lsItemChoosed}"
+										var="partnerItem" width="100%">
+										<f:facet name="header">  
+								           List Item Require
+								          	 <p:commandLink oncomplete="dlgAddItem.show();"
+												action="#{collectionManagedBean.addDroppableItem()}"
+												styleClass="right" style="margin-right: 5px"
+												immediate="true" update="frmAddItem">
+												<img
+													src="#{facesContext.externalContext.requestContextPath}/resources/images/ico_add.png"></img>
+											</p:commandLink>
+										</f:facet>
+										<p:column>
+											<f:facet name="header">
+												Item Name
+											</f:facet>
+											<h:outputText value="#{partnerItem.name}"></h:outputText>
+										</p:column>
+										<p:column>
+											<f:facet name="header">
+												Action
+											</f:facet>
+											<h:commandLink
+												action="#{collectionManagedBean.removeDroppableItem(partnerItem)}"
+												value="Delete">
+												<h:graphicImage
+													url="#{facesContext.externalContext.requestContextPath}/resources/images/ico_add.png"></h:graphicImage>
+											</h:commandLink>
+										</p:column>
+									</p:dataTable>
+								</div>
+							</div>
+							<div class="width100 left">
+								<div class="button_bottom" style="margin-top: 10px;">
+									<h:commandButton action="#{collectionManagedBean.update}"
+										value="Update" styleClass="global-btn" />
+									<h:commandButton action="#{collectionManagedBean.cancel}"
+										value="Cancel" immediate="true" styleClass="global-btn" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!--End  Form create -->
+			<p:dialog header="Add Item" widgetVar="dlgAddItem" modal="true"
+				resizable="false" appendToBody="true">
+				<h:form id="frmAddItem" enctype="multipart/form-data">
+					<div class="left" style="width: 95%">
+						<p:messages showDetail="false" autoUpdate="true" globalOnly="true" />
+					</div>
+					<div style="width: 100%; margin-bottom: 20px;">
+						<!-- add grid for select item here -->
+						<p:dataTable paginator="true" rows="10"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+							paginatorPosition="top" value="#{collectionManagedBean.itemDTOs}"
+							styleClass="data_table" style="width: 100%; margin: 0"
+							var="items" rowKey="#{items.id}" selectionMode="single"
+							id="itemsTable">
+							<p:ajax event="rowSelect"
+								listener="#{collectionManagedBean.onItemRowSelect}"
+								oncomplete="dlgAddItem.hide();"
+								update=":frmAddItem,droppableItemPanel,msg" />
+							<p:column style="padding: 5px;" headerText="Name">
+								<b><h:outputText value="#{items.name}" class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Xp">
+								<b><h:outputText value="#{items.xp}" class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Required Level">
+								<b><h:outputText value="#{items.tblLevel.id}" class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Gold">
+								<b><h:outputText value="#{items.moneyGold}" class="left" /></b>
+							</p:column>
+							<p:column style="padding: 5px;" headerText="Coin">
+								<b><h:outputText value="#{items.moneyCoin}" class="left" /></b>
+							</p:column>
+						</p:dataTable>
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end add droppable item dialog -->
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
+

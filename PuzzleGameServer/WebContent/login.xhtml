@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<f:view contentType="text/html">
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title">PuzzleGame Homepage</ui:insert></title>
+	</h:head>
+
+	<h:body>
+
+		<!--[if IE 7]>
+<link media="all" rel="stylesheet" type="text/css" href=" #{facesContext.externalContext.requestContextPath}/resources/css/iehack7.css" />
+<![endif]-->
+
+		<!--[if gt IE 7]>
+<link media="all" rel="stylesheet" type="text/css" href=" #{facesContext.externalContext.requestContextPath}/resources/css/iehack.css" />
+<![endif]-->
+
+		<link rel="stylesheet" type="text/css"
+			href=" #{facesContext.externalContext.requestContextPath}/resources/primefaces-tvo/override.css" />
+		<link rel="stylesheet" type="text/css"
+			href=" #{facesContext.externalContext.requestContextPath}/resources/css/css.css" />
+		<h:form>
+			<div class="main"
+				style="margin: 0 auto; position: relative; top: 150px; width: 450px;">
+				<div class="main-container">
+					<div class="main-content"
+						style="height: 150px; background: #236EAF">
+						<div style="height: 45px; margin-left: 40px">
+							<h:messages infoClass="message success"
+								errorClass="message error"></h:messages>
+						</div>
+						<div style="margin-top: 0px;" class="left">
+							<label style="width: 100px; margin-left: 40px; color: #FFFFFF"
+								class="bold">User Name</label>
+							<h:inputText value="#{loginBean.username}" required="true"
+								requiredMessage="Username is mandatory."
+								style="width:222px;height:19px;" />
+						</div>
+						<div style="margin-top: 10px;" class="left">
+							<label style="width: 100px; margin-left: 40px; color: #FFFFFF"
+								class="bold">Password</label>
+							<h:inputSecret value="#{loginBean.password}" required="true"
+								requiredMessage="Password is mandatory." style="width:220px;" />
+						</div>
+
+						<div style="margin-top: 10px; margin-left: 145px;" class="left">
+							<h:commandButton action="#{loginBean.login()}" value="Login"
+								styleClass="global-btn" />
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

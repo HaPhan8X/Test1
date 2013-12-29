@@ -1,0 +1,186 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/layout/adminLayout.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:tvo="http://tinhvan.com/tvo"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="title">
+            Manage Room
+        </ui:define>
+	<ui:define name="body">
+		<script type="text/javascript"
+			src="#{facesContext.externalContext.requestContextPath}/resources/js/madtv-checkbox.js"></script>
+		<!-- Form list -->
+		<h:form id="frmListRoom">
+			<div class="main">
+				<div class="main-container">
+					<div class="main-content">
+						<f:metadata>
+							<f:event type="preRenderView"
+								listener="#{roomManagedBean.doSearch()}" />
+						</f:metadata>
+						<div style="height: 25px; margin-left: 0px">
+							<h:messages id="msg" for="globalMessage" errorClass="error"
+								infoClass="success" />
+						</div>
+						<h:inputHidden id="globalMessage"></h:inputHidden>
+						<div class="left" style="width: 100%; padding: 0 0">
+							<p:dataTable id="roomList" var="item" styleClass="table-boder"
+								headerClass="order-table-header"
+								rowClasses="order-table-odd-row,order-table-even-row"
+								value="#{roomManagedBean.rooms}" rowKey="#{item.id}"
+								rowIndexVar="i">
+								<p:column style="width:10px;">
+									<f:facet name="header">
+										<input type="checkbox" id="checkAll" />
+									</f:facet>
+									<h:selectBooleanCheckbox value="#{item.select}"
+										style="width:10px;" styleClass="ckbItem"></h:selectBooleanCheckbox>
+								</p:column>
+
+								<p:column headerText="Room Name">
+									<div class="left">
+										<p:commandLink action="#{roomManagedBean.prepareEdit}"
+											update=":frmUpdate" oncomplete="dlgUpdate.show()"
+											styleClass="global-text-link">#{item.name}
+											<f:setPropertyActionListener value="#{item}"
+												target="#{roomManagedBean.currentRoom}" />
+										</p:commandLink>
+									</div>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										Require Level
+									</f:facet>
+									<h:outputText value="#{item.tblLevel.id}"></h:outputText>
+								</p:column>
+
+								<p:column>
+									<f:facet name="header">
+										Floor Number
+									</f:facet>
+									<h:outputText value="#{item.floorNumber}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Gold
+									</f:facet>
+									<h:outputText value="#{item.moneyGold}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										Coin
+									</f:facet>
+									<h:outputText value="#{item.moneyCoin}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+						</div>
+						<div class="paging left center">
+							<p:panel id="paging">
+								<tvo:tvo-paging currentPage="#{roomManagedBean.currentPage}"
+									limit="#{roomManagedBean.limit}"
+									total="#{roomManagedBean.totalRecords}"
+									endPage="#{roomManagedBean.endPage}"
+									actionBean="roomManagedBean" />
+
+							</p:panel>
+						</div>
+						<h:inputHidden id="dialog" value="#{roomManagedBean.dialog}"></h:inputHidden>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<!--End  Form list -->
+		<!-- Form update -->
+		<p:dialog header="Update Room Info" modal="true" widgetVar="dlgUpdate"
+			resizable="false">
+			<h:form id="frmUpdate" enctype="multipart/form-data">
+				<p>
+					<h:messages id="msgUpdate" infoClass="message success"
+						errorClass="message error" />
+				</p>
+				<div class="rbt_img">
+					<p:graphicImage id="image"
+						value="#{roomManagedBean.imageData != null ? roomManagedBean.imageData : '/resources/images/no-images.png'}"
+						width="98" height="98" style="margin: 7px" cache="false" />
+				</div>
+				<div
+					style="background: no-repeat center; width: 112px; height: 50px; margin-left: 210px;">
+					<p:fileUpload
+						fileUploadListener="#{roomManagedBean.handleFileUpload}"
+						styleClass="left" auto="true" mode="advanced" label="Change Image"
+						update="frmUpdate:image,msgUpdate" />
+				</div>
+				<br />
+				<div style="background: no-repeat center; margin: 0 auto">
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Room Name:</label>
+						<h:inputText value="#{roomManagedBean.currentRoom.name}"
+							style="width: 300px" readonly="true" />
+					</p>
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Floor Number:</label>
+						<h:inputText value="#{roomManagedBean.currentRoom.floorNumber}"
+							style="width: 300px" readonly="true" />
+					</p>
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Money Gold:</label>
+						<h:inputText id="moneyGold" label="Money Gold"
+							value="#{roomManagedBean.currentRoom.moneyGold}"
+							style="width: 300px" required="true"
+							requiredMessage="Money gold is mandatory."
+							converterMessage="Money Gold must be number">
+							<f:validator validatorId="numberValidator" />
+						</h:inputText>
+					</p>
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Money Coin:</label>
+						<h:inputText id="moneyCoin" label="Money Coin"
+							value="#{roomManagedBean.currentRoom.moneyCoin}"
+							style="width: 300px" required="true"
+							requiredMessage="Money coin is mandatory."
+							converterMessage="Money Coin must be number">
+							<f:validator validatorId="numberValidator" />
+						</h:inputText>
+					</p>
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Required Level:</label>
+						<h:selectOneMenu value="#{roomManagedBean.selectedLevel}">
+							<f:selectItems value="#{roomManagedBean.levels}" var="level"
+								itemLabel="#{level.id}" itemValue="#{level.id}" />
+						</h:selectOneMenu>
+					</p>
+					<p style="margin: 0 0 5px 0">
+						<label class="bold">Description:</label>
+						<h:inputTextarea
+							value="#{roomManagedBean.currentRoom.description}"
+							style="width:300px;" required="true"
+							requiredMessage="Description is mandatory." />
+					</p>
+				</div>
+				<br></br>
+				<div class="button_bottom pbutton" style="margin: 10px 0 10px 0">
+					<p:commandButton action="#{roomManagedBean.update}" value="Update"
+						styleClass="global-btn" update="msgUpdate,:frmListRoom"
+						oncomplete="handleRequest(xhr, status, args)" />
+					<p:commandButton action="#{roomManagedBean.cancel}" value="Cancel"
+						styleClass="global-btn" onclick="dlgUpdate.hide();"
+						immediate="true" update=":frmListRoom" />
+				</div>
+			</h:form>
+		</p:dialog>
+
+		<!--End  Form update -->
+		<script type="text/javascript">  
+			    	 function handleRequest(xhr, status, args) {  
+			    			if(args.validationFailed || !args.updateSuccess) {
+							} else {
+								dlgUpdate.hide();
+							}
+			    	    }  
+			</script>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	xmlns:tvo="http://tinhvan.com/tvo">
+<f:view>
+	<ui:composition template="/layout/adminLayout.xhtml">
+		<ui:define name="menu">
+			<tvo:tvo-menu active="test"></tvo:tvo-menu>
+		</ui:define>
+		<ui:define name="msg"></ui:define>
+		<ui:define name="title">
+          Level List
+     </ui:define>
+		<ui:define name="body">
+			<!-- Form list-->
+			<h:form id="frmLevelList">
+				<div class="main">
+					<div class="main-container">
+						<div class="main-content">
+
+							<f:metadata>
+								<f:event type="preRenderView"
+									listener="#{levelManagedBean.doSearch()}" />
+							</f:metadata>
+							<div style="height: 25px; margin-left: 0px">
+								<h:messages id="msg" for="globalMessage" errorClass="error"
+									infoClass="success" />
+							</div>
+							<h:inputHidden id="globalMessage"></h:inputHidden>
+							<p:dataTable id="levelTable" headerClass="table-header"
+								styleClass="table-boder" value="#{levelManagedBean.lsLevelTOs}"
+								var="level" width="100%">
+								<p:column>
+									<f:facet name="header">
+									Level
+								</f:facet>
+									<p:commandLink actionListener="#{levelManagedBean.edit}"
+										oncomplete="dlgEdit.show()" update=":frmEdit"
+										styleClass="global-text-link" value="#{level.id}"
+										immediate="true">
+										<f:param value="#{level.id}" name="currLevelId"></f:param>
+									</p:commandLink>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									From Xp
+								</f:facet>
+									<h:outputText value="#{level.fromXp}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									To Xp
+								</f:facet>
+									<h:outputText value="#{level.toXp}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Number Of Friend Can Share
+								</f:facet>
+									<h:outputText value="#{level.numberOfFriendCanShare}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Max Number Of Studio Can Buy
+								</f:facet>
+									<h:outputText value="#{level.maxNumberOfStudioCanBuy}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Number Of Movie Can Share
+								</f:facet>
+									<h:outputText value="#{level.numberOfMovieCanShare}"></h:outputText>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+									Number Of Item Can Share
+								</f:facet>
+									<h:outputText value="#{level.numberOfItemCanShare}"></h:outputText>
+								</p:column>
+							</p:dataTable>
+							<div class="pagination right">
+								<tvo:tvo-paging currentPage="#{levelManagedBean.currentPage}"
+									limit="#{levelManagedBean.limit}"
+									total="#{levelManagedBean.totalRecords}"
+									endPage="#{levelManagedBean.endPage}"
+									actionBean="levelManagedBean" />
+							</div>
+							<div style="margin-top: 7px; float: left;" class="pbutton">
+								<p:commandButton styleClass="global-btn"
+									actionListener="#{levelManagedBean.add}" value="Add"
+									oncomplete="dlgCreate.show()" update=":frmCreate">
+								</p:commandButton>
+
+							</div>
+							<!-- .pagination ends -->
+						</div>
+					</div>
+				</div>
+			</h:form>
+			<!-- end form List -->
+			<!-- create Level form -->
+			<p:dialog header="Create level" modal="true" widgetVar="dlgCreate"
+				resizable="false">
+				<h:form id="frmCreate" enctype="multipart/form-data"
+					prependId="false">
+					<p>
+						<h:messages id="msgCreate" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div
+						style="background: no-repeat center; width: 100%; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">From Xp</label>
+							<h:inputText id="fromxpCreate" label="From Xp"
+								value="#{levelManagedBean.levelDTO.fromXp}" required="true"
+								requiredMessage="From Xp is required"
+								converterMessage="From Xp must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">To Xp</label>
+							<h:inputText id="toXpCreate" label="To Xp"
+								value="#{levelManagedBean.levelDTO.toXp}" required="true"
+								requiredMessage="To Xp is required"
+								converterMessage="To Xp must be number" styleClass="text medium"
+								maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Friend Can Share</label>
+							<h:inputText id="numberFriendCreate"
+								label="Number Friend Can Share"
+								value="#{levelManagedBean.levelDTO.numberOfFriendCanShare}"
+								required="true"
+								requiredMessage="Number Of Friend Can Share is required"
+								converterMessage="Number Of Friend Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Max Number Of Studio Can Buy</label>
+							<h:inputText id="maxNumberStudioCreate"
+								label="Max Number of studio can buy"
+								value="#{levelManagedBean.levelDTO.maxNumberOfStudioCanBuy}"
+								required="true"
+								requiredMessage="Max Number Of Studio Can Buy is required"
+								converterMessage="Max Number Of Studio Can Buy must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Movie Can Share</label>
+							<h:inputText id="numberMovieCreate"
+								label="Number of movie can share"
+								value="#{levelManagedBean.levelDTO.numberOfMovieCanShare}"
+								required="true"
+								requiredMessage="Number Of Movie Can Share is required"
+								converterMessage="Number Of Movie Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Item Can Share</label>
+							<h:inputText id="numberItemCreate"
+								label="Number Of Item Can Share"
+								value="#{levelManagedBean.levelDTO.numberOfItemCanShare}"
+								required="true"
+								requiredMessage="Number Of Item Can Share is required"
+								converterMessage="Number Of Item Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+					</div>
+					<br />
+					<div
+						style="background: no-repeat center; width: 100%; height: 30px; margin: 10px 0 10px 0"
+						class="left pbutton">
+						<p:commandButton action="#{levelManagedBean.createLevel}"
+							value="Create" styleClass="global-btn"
+							update="msgCreate,:frmLevelList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{levelManagedBean.cancel}"
+							value="Cancel" update=":frmLevelList" styleClass="global-btn"
+							onclick="dlgCreate.hide();" immediate="true"
+							oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end create level form  -->
+			<!-- edit Level form -->
+			<p:dialog header="Edit level" width="490" modal="true"
+				widgetVar="dlgEdit" resizable="false">
+				<h:form id="frmEdit" enctype="multipart/form-data" prependId="false">
+					<p>
+						<h:messages id="msgEdit" infoClass="message success"
+							errorClass="message error" />
+					</p>
+					<div
+						style="background: no-repeat center; width: 100%; margin: 0 auto">
+						<p style="margin-top: 10px">
+							<label class="bold">Level</label>
+							<h:inputText value="#{levelManagedBean.levelDTO.id}"
+								styleClass="text medium" readonly="true" />
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">From Xp</label>
+							<h:inputText id="fromxpEdit" label="From Xp"
+								value="#{levelManagedBean.levelDTO.fromXp}" required="true"
+								requiredMessage="From Xp is required"
+								converterMessage="From Xp must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">To Xp</label>
+							<h:inputText id="toXpEdit" label="To Xp"
+								value="#{levelManagedBean.levelDTO.toXp}" required="true"
+								requiredMessage="To Xp is required"
+								converterMessage="To Xp must be number" styleClass="text medium"
+								maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Friend Can Share</label>
+							<h:inputText id="numberFriendEdit"
+								label="Number Friend Can Share"
+								value="#{levelManagedBean.levelDTO.numberOfFriendCanShare}"
+								required="true"
+								requiredMessage="Number Of Friend Can Share is required"
+								converterMessage="Number Of Friend Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Max Number Of Studio Can Buy</label>
+							<h:inputText id="maxNumberStudioEdit"
+								label="Max Number of studio can buy"
+								value="#{levelManagedBean.levelDTO.maxNumberOfStudioCanBuy}"
+								required="true"
+								requiredMessage="Max Number Of Studio Can Buy is required"
+								converterMessage="Max Number Of Studio Can Buy must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Movie Can Share</label>
+							<h:inputText id="numberMovieEdit"
+								label="Number of movie can share"
+								value="#{levelManagedBean.levelDTO.numberOfMovieCanShare}"
+								required="true"
+								requiredMessage="Number Of Movie Can Share is required"
+								converterMessage="Number Of Movie Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+						<p style="margin-top: 10px">
+							<label class="bold">Number Of Item Can Share</label>
+							<h:inputText id="numberItemEdit" label="Number Of Item Can Share"
+								value="#{levelManagedBean.levelDTO.numberOfItemCanShare}"
+								required="true"
+								requiredMessage="Number Of Item Can Share is required"
+								converterMessage="Number Of Item Can Share must be number"
+								styleClass="text medium" maxlength="9">
+								<f:validator validatorId="numberValidator" />
+							</h:inputText>
+						</p>
+					</div>
+					<br />
+					<div
+						style="background: no-repeat center; width: 100%; height: 30px; margin: 10px 0 10px 0"
+						class="left pbutton">
+						<p:commandButton action="#{levelManagedBean.update}"
+							value="Update" styleClass="global-btn"
+							update="msgEdit,:frmLevelList"
+							oncomplete="handleCreateRequest(xhr, status, args)" />
+						<p:commandButton action="#{levelManagedBean.cancel}"
+							value="Cancel" styleClass="global-btn" onclick="dlgEdit.hide();"
+							immediate="true" update=":frmLevelList"
+							oncomplete="addCheckAllListener();" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- end edit Level form -->
+			<script type="text/javascript">
+			function handleCreateRequest(xhr, status, args) {
+				if(args.validationFailed || !args.createSuccess) {
+				} else {
+					dlgCreate.hide();
+					dlgEdit.hide();
+				}
+			}
+		</script>
+		</ui:define>
+	</ui:composition>
+</f:view>
+</html>
